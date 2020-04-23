@@ -1,0 +1,78 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Pas
+@using Obuka_Vojnih_Pasa.Models.Domain
+
+<br />
+<h3 id="confirm">
+    @if (@ViewBag.Message != string.Empty)
+    {
+        @ViewBag.Message
+        <a onclick="Ok()" style="cursor: pointer" class="btn btn-sm">OK <i class="fa fa-check-circle"></i></a>
+    }
+</h3>
+
+<form style="padding-top: 30px">
+    <div class="form-row">
+
+        <div class="form-group col-md-3">
+            <input type="text" id="pas" placeholder="Pretraga po imenu psa .." class="form-control">
+        </div>
+        <div class="form-group col-md-3">
+
+            <select class="form-control" id="obukaId">
+
+                <option value="0">Sve obuke</option>
+                @foreach (Obuka obuka in ViewBag.ListaObuka)
+                {
+                    <option value=@obuka.Id>@obuka.Naziv</option>
+                }
+           
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <input id="btnSearch" type="button" class="btn btnPsi btn-primary btn-outline-light" value="Pretraži" />
+        </div>
+        <div class="form-group col-2">
+            @if (User.IsInRole("User") || User.IsInRole("Admin"))
+            {
+                <a asp-action="Create" class="btn btnPsi btn-primary btn-outline-light"><i class="fa fa-paw"></i> Dodaj novog psa</a>
+            }
+        </div>
+    </div>
+</form>
+
+<div id="psi"> </div>
+
+
+<script src="~/js/scripts.js"></script>
+<script>
+    $(function () {
+        GetPsi();
+    });
+    $('#btnSearch').on('click', function (e) {
+        var filters = {
+            pas: $('#pas').val(),
+            obukaId: $('#obukaId').val(),
+            operacija: 'Pretraga'
+        };
+        GetPsi(filters);
+    });
+    function GetPsi(filters) {
+        $.ajax({
+            url: '/Pas/Psi',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                $('#psi').html(result);
+            }).fail(function (xhr) {
+                console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+
+</script>
+<link href="~/content/site.css" rel="stylesheet" />

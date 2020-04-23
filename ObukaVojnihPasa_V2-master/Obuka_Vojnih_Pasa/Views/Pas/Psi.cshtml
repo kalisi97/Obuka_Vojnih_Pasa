@@ -1,0 +1,120 @@
+﻿@using Obuka_Vojnih_Pasa.Models.Domain;
+@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.Pas>
+
+@inject UserManager<ApplicationUser> userManager
+<link href="~/lib/sortable/Contents/bootstrap-sortable.css" rel="stylesheet" />
+
+@{Instruktor instruktor = null; }
+@{
+    @if (!User.IsInRole("Admin"))
+        instruktor = await userManager.FindByIdAsync(userManager.GetUserId(User)) as Instruktor;
+}
+
+@if (Model.Count() == 0)
+{
+    <h3>Nije pronađen nijedan pas po unetom kriterijumu pretrage.</h3>
+}
+else
+{
+    <div id="scroll">
+        <table class="table sortable" id="listaPasa">
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Br. knjizice
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Ime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().DatumRodjenja)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Rasa)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Pol)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Obuka)
+                    </th>
+
+                    <th>
+                        Izmeni
+                    </th>
+                    <th>
+                        Ukloni
+                    </th>
+
+
+                    <th>
+                        Statistika
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <i class="fas fa-paw"></i>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BrojZdravstveneKnjizice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumRodjenja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rasa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Obuka.Naziv)
+                        </td>
+
+                        @if ((instruktor != null && item.ObukaId == instruktor.ObukaId) || User.IsInRole("Admin"))
+                        {
+
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" title="Izmeni podatke o psu"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
+                            </td>
+                            <td>
+
+                                <a asp-action="Delete" asp-route-id="@item.Id" title="Obriši podatke o psu"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <i class="fas fa-user-alt-slash" style="color:snow;margin-left:20px" title="Nemate dozvolu za pristup ovoj opciji"></i>
+                            </td>
+                            <td>
+                                <i class="fas fa-user-alt-slash" style="color:snow;margin-left:20px" title="Nemate dozvolu za pristup ovoj opciji"></i>
+                            </td>
+                        }
+
+
+                        <td>
+                            <a asp-action="Statistika" asp-route-id="@item.Id" title="Statistika angažovanja psa" target="_blank"><i class=" fas fa-chart-line" style="color:snow;margin-left:20px"></i></a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+
+<script src="~/lib/sortable/Scripts/bootstrap-sortable.js"></script>
+<script src="~/lib/sortable/Scripts/moment.min.js"></script>

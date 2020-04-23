@@ -1,0 +1,64 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Zadatak
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+
+<div class="edit" style="background:none">
+    <div class="container">
+        <div class="row main">
+            <div class="main-login main-center" style="background:linear-gradient(to right, #1a2980, #26d0ce);">
+                <h5>Da li ste sigurni da želite da uklonite podatke?</h5>
+                <form asp-action="Delete">
+                    <input type="hidden" asp-for="Id" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Naziv zadatka</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group" style="width:300px">
+                                @Html.TextBoxFor(model => model.NazivZadatka, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Datum</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar-alt fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.Datum, "{0:dd/MM/yyyy}",new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Naziv terena</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map-marked-alt" aria-hidden="true"></i></span>
+
+                                @Html.TextBoxFor(model => model.Teren, new { @class = "form-control", @readonly = "readonly" })
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group" style="padding-top:10px">
+
+                        <input type="submit" class="btn-submit" value="Potvrdi brisanje" />
+                        <a asp-action="Index" class="btn-cancel" style="margin-left: 20px; width: 140px; line-height:1.3">Otkaži</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

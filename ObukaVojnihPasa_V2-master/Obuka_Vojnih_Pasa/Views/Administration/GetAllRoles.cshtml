@@ -1,0 +1,128 @@
+﻿@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = "All Roles";
+}
+
+<body>
+    <div class="container fadeInDown" style="padding: 40px;">
+        @if (Model.Any())
+        {
+            <a class="btn btn-primary btn_admin mb-3" style="width:auto"
+               id="btnDodajUlogu"> Kreiraj ulogu</a>
+
+
+
+            foreach (var role in Model)
+            {
+                <div class="carda mb-3" style="height:150px">
+
+                    <div class="card-body">
+                        <h5 class="card-title"><img src="https://img.icons8.com/nolan/64/street-view.png" />Naziv uloge u sistemu:    @role.Name</h5>
+                    </div>
+                    <div class="card-footer">
+
+                        <form asp-action="DeleteRole" asp-route-id="@role.Id" method="post">
+                            <a asp-controller="Administration" asp-action="EditRole"
+                               asp-route-id="@role.Id" class="btn btn-primary btn_admin mr-lg-4">Izmeni ulogu</a>
+
+                            <span id="confirmDeleteSpan_@role.Id" style="display:none">
+                                <span>Da li ste sigurni da želite da obrišete ulogu?</span>
+                                <button type="submit" class="btn btn-primary btn_admin mr-1 ml-1">Da</button>
+                                <a class="btn btn-primary btn_admin"
+                                   onclick="confirmDelete('@role.Id', false)">Ne</a>
+                            </span>
+
+                            <span id="deleteSpan_@role.Id">
+                                <a class="btn btn-primary btn_admin"
+                                   onclick="confirmDelete('@role.Id', true)">Obriši ulogu</a>
+                            </span>
+                        </form>
+
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+
+
+            <div class="carda">
+                <div class="card-header">
+                    Ne postoji nijedna uloga u sistemu.
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Koristite ovo dugme za dodavanje nove uloge.</h5>
+                    <a class="btn btn-primary btn_admin mb-3" style="width:auto"
+                       id="btnDodajUlogu"> Kreiraj ulogu</a>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+<script type="text/javascript">
+    function confirmDelete(uniqueId, isDeleteClicked) {
+        var deleteSpan = 'deleteSpan_' + uniqueId;
+        var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+        } else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
+    }
+    $("body").on("click", "#btnDodajUlogu", async function () {
+
+        var u = {};
+        const { value: text } = await Swal.fire({
+            title: 'Unesite naziv uloge',
+            input: 'text',
+            inputPlaceholder: 'Naziv uloge',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'You need to write something!'
+                }
+            }
+        })
+        if (text) {
+            u.RoleName = text;
+
+
+            $.ajax({
+                type: "POST",
+                url: "/Administration/CreateRole",
+                data: JSON.stringify(u),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: "Broj novih uloga:  " + r + " nova uloga"
+
+
+                    }).then(function () {
+
+                        window.location.replace('/Administration/GetAllRoles');
+                    });
+
+
+                }
+
+
+
+            });
+        }
+    });
+
+
+
+
+
+</script>
+<script src="~/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<link href="~/content/site.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>

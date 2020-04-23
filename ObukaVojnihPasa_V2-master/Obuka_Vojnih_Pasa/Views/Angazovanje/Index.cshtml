@@ -1,0 +1,82 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Angazovanje
+@using Obuka_Vojnih_Pasa.Models.Domain;
+@{
+    List<Zadatak> zadaci = ViewBag.ListaZadataka;
+}
+
+
+<br />
+<h3 id="confirm">
+    @if (@ViewBag.Message != string.Empty)
+    {
+        @ViewBag.Message
+        <a onclick="Ok()" style="cursor: pointer" class="btn btn-sm">OK <i class="fa fa-check-circle"></i></a>
+    }
+</h3>
+
+<form style="padding-top: 30px">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <input type="text" id="kriterijum" placeholder="Pretraga po imenu psa .." class="form-control">
+        </div>
+
+        <div class="form-group col-md-3">
+
+            <select class="form-control" id="zadatakId">
+                <option value="0">Svi zadaci</option>
+                @foreach (Zadatak item in zadaci)
+                {
+                    <option value=@item.Id>@item.NazivZadatka</option>
+
+                }
+            </select>
+        </div>
+
+        <div class="form-group col-md-4">
+            <input id="btnSearch" type="button" class="btn btn-sm btn-primary btn-outline-light" value="Pretraži" />
+        </div>
+       
+    </div>
+</form>
+
+<div id="angazovanja"> </div>
+
+
+
+<script>
+    function Ok() {
+        var x = document.getElementById("confirm");
+        x.style.display = "none";
+    }
+
+    $(function () {
+        GetAngazovanja();
+    });
+    $('#btnSearch').on('click', function (e) {
+        var filters = {
+            kriterijum: $('#kriterijum').val(),
+            zadatakId: $('#zadatakId').val()
+        }
+
+
+        GetAngazovanja(filters);
+    });
+    function GetAngazovanja(filters) {
+        $.ajax({
+            url: '/Angazovanje/Angazovanja',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                $('#angazovanja').html(result);
+            }).fail(function (xhr) {
+                console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+
+</script>
+<link href="~/content/site.css" rel="stylesheet" />

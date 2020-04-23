@@ -1,0 +1,610 @@
+﻿
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<link href="https://raw.githubusercontent.com/daneden/animate.css/master/animate.css" rel="stylesheet">
+
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body style="background-image: url('../images/zapocetnu.jpg'); background-size:cover; background-repeat:no-repeat">
+
+    <h3 id="confirm" style="padding-top: 30px; font-size:24px;font-weight:500; line-height: 1.1;color: antiquewhite;">
+        @if (@ViewBag.Message != string.Empty)
+        {
+            @ViewBag.Message
+            <a onclick="Ok()" style="cursor: pointer; border: 2px solid #eee;
+    font-size: 1.3rem;
+    border-color: silver !important;" class="btn btn-sm" >OK <i class="fa fa-check-circle"></i></a>
+        }
+    </h3>
+
+
+
+    <section style="padding-top:5rem;">
+        <div id="myCarousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="mask flex-center">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 col-10 order-md-1 order-2">
+
+
+                                    <h4 style="padding-left:40px">
+                                        <i class="fa fa-paw fa-rotate--45"></i>    Dobrodošli
+
+                                    </h4>
+                                    <p style="margin-left: 70px"> “Even dogs know how important it is to hear somebody else breathing.”</p>
+
+                                    <h3>
+                                        <i class="fa fa-paw fa-rotate-45"></i>
+
+                                    </h3>
+                                    <h2>
+                                        <i class="fa fa-paw fa-rotate--45"></i>
+
+                                    </h2>
+                                    <h2>
+                                        <i class="fa fa-paw fa-rotate-45"></i>
+
+                                    </h2>
+
+
+                                </div>
+
+                                <div class="col-md-8 col-10 order-md-2 order-1">
+                                    <img src="~/images/f.png" class="mx-auto" alt="slide">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="carousel-item">
+                    <div class="mask flex-center">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-md-7 col-10 order-md-1 order-2">
+                                    <h4>
+                                        “Nije bitna <br>
+                                        veličina psa u borbi
+                                    </h4>
+                                    <p>
+                                        bitna je veličina borbe u psu.”   -Mark Tven
+
+                                    </p>
+
+                                </div>
+                                <div class="col-md-4 col-10 order-md-2 order-1"><img src="~/images/http___pluspng.com_img-png_dog-hd-png-dog-hd-wallpapers-png-hd-dogs-1300.png" class="mx-auto" alt="slide"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">  <span class="sr-only">Previous</span> </a> <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next"> <span class="sr-only">Next</span> </a>
+        </div>
+
+
+    </section>
+
+
+    <div class="index" style="padding-top:0">
+
+        <h2>  <i class="fa fa-paw fa-rotate--45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i> <i class="fa fa-paw" style="color:lightgrey"></i> <i class="fa fa-paw fa-rotate-45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i></h2>
+
+        <h2>Vojni službeni psi</h2>
+        <p>Vojska Srbije raspolaže sa više desetina službenih pasa koji obavljaju različite zadatke. Najviše je šarplaninskih, nemačkih i belgijskih ovčara i labrador retrivera. Najbrojniji su vučjaci, što se objašnjava, istorijski gledano, najdužom upotrebom.</p>
+    </div>
+
+    <!--slide end-->
+    <!--index-->
+    <section id="vojniPsiSection" style="margin-top:20px;  background-image: url('../images/highResolution1.jpg');">
+        <div class="container mt-40">
+
+            <div class="row mt-30">
+                <div class="col-md-3 col-sm-6">
+                    <div class="box12">
+                        <img src="~/images/1.jpg">
+                        <div class="box-content">
+                            <a onclick="Prikazi('first')" style="cursor: pointer"> <h3 class="title">Šarplaninac</h3> </a>
+
+                        </div>
+
+                    </div>
+                    <div id="first" style="display:none;">
+                        <div class="index">
+
+                            <p>Inteligentan, samostalno donosi odluke. Ne treba očekivati bespogovorno izvršavanje komandi - izvršiće je onda kada proceni da je to potrebno.</p>
+                            <a href="https://sr.wikipedia.org/sr-ec/%D0%A8%D0%B0%D1%80%D0%BF%D0%BB%D0%B0%D0%BD%D0%B8%D0%BD%D0%B0%D1%86" target="_blank" class="btn btn-primary" style="font-size: 16px;
+    border-radius: 30px;padding: 7px 20px; text-align:center"> <i class="fa fa-link"></i> Više o rasi</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="box12">
+                        <img src="~/images/2.jpg">
+                        <div class="box-content">
+                            <a onclick="Prikazi('second')" style="cursor: pointer"><h3 class="title">Malinoa</h3> </a>
+
+                        </div>
+
+                    </div>
+                    <div id="second" style="display:none">
+
+                        <div class="index">
+                            <p>Inteligentan i veoma aktivan, pas srednje veličine, malinoa se svetu potvrdio kao pas odličan u radu s policijom i nenadmašan u traganju za narkoticima.</p>
+                            <a href="https://sr.wikipedia.org/sr/Malinoa" target="_blank" class="btn btn-primary" style="font-size: 16px;
+    border-radius: 30px;padding: 7px 20px; text-align:center"> <i class="fa fa-link"></i> Više o rasi</a>
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="box12">
+                        <img src="~/images/3.jpg">
+                        <div class="box-content">
+                            <a onclick="Prikazi('third')" style="cursor: pointer"><h3 class="title">Labrador-retriver</h3> </a>
+
+
+                        </div>
+
+                    </div>
+                    <div id="third" style="display:none">
+                        <div class="index">
+                            <p>
+                                Najpoplarnija rasa psa asistenta u SAD, Australiji i mnogim drugim državama. Koristi se u policiji i vojsci zbog detekcije i radnih sposobnosti.
+                                Nežni, pametni, snažni i dobre naravi.
+
+                            </p>
+                            <a href="https://sr.wikipedia.org/wiki/%D0%9B%D0%B0%D0%B1%D1%80%D0%B0%D0%B4%D0%BE%D1%80_%D1%80%D0%B5%D1%82%D1%80%D0%B8%D0%B2%D0%B5%D1%80" target="_blank" class="btn btn-primary" style="font-size: 16px;
+    border-radius: 30px;padding: 7px 20px; text-align:center"> <i class="fa fa-link"></i> Više o rasi</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="box12">
+                        <img src="~/images/4.jpg">
+                        <div class="box-content">
+
+                            <a onclick="Prikazi('fourth')" style="cursor: pointer"><h3 class="title">Vučjak</h3> </a>
+                        </div>
+                    </div>
+                    <div id="fourth" style="display:none">
+                        <div class="index">
+                            <p>Smiren, nervno stabilan, siguran u sebe, miran, oprezan i vodljiv. Pogodan za raznovrsnu upotrebu posebno kao pratilac, stražar i zaštitnik.</p>
+                            <a href="https://sr.wikipedia.org/wiki/%D0%9D%D0%B5%D0%BC%D0%B0%D1%87%D0%BA%D0%B8_%D0%BE%D0%B2%D1%87%D0%B0%D1%80" target="_blank" class="btn btn-primary" style="font-size: 16px;
+    border-radius: 30px;padding: 7px 20px; text-align:center"> <i class="fa fa-link"></i> Više o rasi</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <div class="index">
+        <h2>  <i class="fa fa-paw fa-rotate--45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i> <i class="fa fa-paw" style="color:lightgrey"></i> <i class="fa fa-paw fa-rotate-45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i></h2>
+
+
+        <h2><i class="fa fa-newspaper"></i> Aktuelnosti</h2>
+    </div>
+
+    <section id="novostiSection" style="background-image: url('../images/highResolution1.jpg'); margin-top:20px;">
+        <div class="container">
+
+            <!--Start code-->
+            <div class="row">
+                <div class="col-12 pb-5">
+                    <!--SECTION START-->
+                    <section class="row">
+                        <!--Start slider news-->
+                        <div class="col-12 col-md-6 pb-0 pb-md-3 pt-2 pr-md-1">
+                            <div id="featured" class="carousel slide carousel" data-ride="carousel">
+                                <!--dots navigate-->
+                                <!--carousel inner-->
+                                <div class="carousel-inner">
+                                    <!--Item slider-->
+                                    <div class="carousel-item active">
+                                        <div class="card border-0 rounded-0 text-light overflow zoom">
+                                            <div class="position-relative">
+                                                <!--thumbnail img-->
+                                                <div class="ratio_left-cover-1 image-wrapper">
+                                                    <a href="https://www.blic.rs/slobodno-vreme/rado-ide-vucjak-u-vojnike-ovo-su-najhrabriji-psi-srbije/81f1h9v" target="_blank">
+
+                                                        <img class="img-fluid w-100 h-100"
+                                                             src="~/images/slajd1.png">
+                                                    </a>
+                                                </div>
+                                                <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+                                                    <!--title-->
+                                                    <a href="https://www.blic.rs/slobodno-vreme/rado-ide-vucjak-u-vojnike-ovo-su-najhrabriji-psi-srbije/81f1h9v" target="_blank">
+                                                        <h2 class="h3 post-title text-white my-1">Rado ide vučjak u vojnike: Ovo su najhrabriji psi Srbije!</h2>
+                                                    </a>
+                                                    <div class="news-meta">
+                                                        <span class="news-author">by <a class="text-white font-weight-bold"> Magazin Pas</a></span>
+                                                        <span class="news-date">April 22, 2020</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!--Item slider-->
+                                    <div class="carousel-item">
+                                        <div class="card border-0 rounded-0 text-light overflow zoom">
+                                            <div class="position-relative">
+                                                <!--thumbnail img-->
+                                                <div class="ratio_left-cover-1 image-wrapper">
+                                                    <a href="https://specijalne-jedinice.com/Tekstovi/Strucni-saradnik/Upotreba-sluzbenih-pasa.html#sthash.ax23sGLh.dpbs" target="_blank">
+                                                        <img class="img-fluid w-100"
+                                                             src="~/images/slajd3.jpg">
+                                                    </a>
+                                                </div>
+                                                <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+                                                    <!--title-->
+                                                    <a href="https://specijalne-jedinice.com/Tekstovi/Strucni-saradnik/Upotreba-sluzbenih-pasa.html#sthash.ax23sGLh.dpbs" target="_blank">
+                                                        <h2 class="h3 post-title text-white my-1">Upotreba službenih pasa</h2>
+                                                    </a>
+                                                    <!-- meta title -->
+                                                    <div class="news-meta">
+                                                        <span class="news-author">by <a class="text-white font-weight-bold">Specijalne jedinice, stručni saradnik</a></span>
+                                                        <span class="news-date">Jun 01, 2020</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--Item slider-->
+                                    <div class="carousel-item">
+                                        <div class="card border-0 rounded-0 text-light overflow zoom">
+                                            <div class="position-relative">
+                                                <!--thumbnail img-->
+                                                <div class="ratio_left-cover-1 image-wrapper">
+                                                    <a href="https://www.republika.rs/lifestyle/ljubimac/142146/sarplaninac-rado-ide-vojnike-psi-koji-godinama-verno-stoje-nasu-vojsku" target="_blank">
+                                                        <img class="img-fluid w-100"
+                                                             src="~/images/slika2.jpg">
+                                                    </a>
+                                                </div>
+                                                <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+                                                    <!--title-->
+                                                    <a href="https://www.republika.rs/lifestyle/ljubimac/142146/sarplaninac-rado-ide-vojnike-psi-koji-godinama-verno-stoje-nasu-vojsku" target="_blank">
+                                                        <h2 class="h3 post-title text-white my-1">Psi koji godinama stoje uz našu vojsku</h2>
+                                                    </a>
+                                                    <!-- meta title -->
+                                                    <div class="news-meta">
+                                                        <span class="news-author">by <a class="text-white font-weight-bold">Republika, E.S.T</a></span>
+                                                        <span class="news-date">Oct 22, 2019</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end item slider-->
+                                </div>
+                                <!--end carousel inner-->
+                            </div>
+
+                            <!--navigation-->
+                            <a class="carousel-control-prev" href="#featured" role="button" data-slide="prev">
+                            </a>
+                            <a class="carousel-control-next" href="#featured" role="button" data-slide="next">
+
+                            </a>
+                        </div>
+                        <!--End slider news-->
+                        <!--Start box news-->
+                        <div class="col-12 col-md-6 pt-2 pl-md-1 mb-3 mb-lg-4">
+                            <div class="row">
+                                <!--news box-->
+                                <div class="col-6 pb-1 pt-0 pr-1">
+                                    <div class="card border-0 rounded-0 text-white overflow zoom">
+                                        <div class="position-relative">
+                                            <!--thumbnail img-->
+                                            <div class="ratio_right-cover-2 image-wrapper">
+                                                <a href="http://www.politika.rs/sr/clanak/433435/Drustvo/Sta-sve-mogu-vojni-sluzbeni-psi-FOTO" target="_blank">
+                                                    <img class="img-fluid"
+                                                         src="~/images/slajd4.png">
+                                                </a>
+                                            </div>
+                                            <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+
+
+                                                <!--title-->
+                                                <a href="http://www.politika.rs/sr/clanak/433435/Drustvo/Sta-sve-mogu-vojni-sluzbeni-psi-FOTO" target="_blank">
+                                                    <h2 class="h5 text-white my-1">Šta sve mogu vojni službeni psi (FOTO)</h2>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <div class="col-6 pb-1 pl-1 pt-0">
+                                    <div class="card border-0 rounded-0 text-white overflow zoom">
+                                        <div class="position-relative">
+                                            <!--thumbnail img-->
+                                            <div class="ratio_right-cover-2 image-wrapper">
+                                                <a href="https://www.zov.rs/ceta-vodica-sluzbenih-pasa-na-bezanijskoj-kosi/" target="_blank">
+                                                    <img class="img-fluid"
+                                                         src="~/images/pozadina.jpg">
+                                                </a>
+                                            </div>
+                                            <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+                                                <!-- category -->
+                                                <!--title-->
+                                                <a asp-area="" asp-controller="Pas" asp-action="SveRase">
+                                                    <h2 class="h5 text-white my-1">Rase službnih pasa vojnih četa</h2>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--news box-->
+                                <div class="col-6 pb-1 pr-1 pt-1">
+                                    <div class="card border-0 rounded-0 text-white overflow zoom">
+                                        <div class="position-relative">
+                                            <!--thumbnail img-->
+                                            <div class="ratio_right-cover-2 image-wrapper">
+                                                <a href="https://petface.net/sampionsko/" target="_blank">
+                                                    <img class="img-fluid"
+                                                         src="~/images/pozadina2 (10).png">
+                                                </a>
+                                            </div>
+                                            <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+
+                                                <a href="https://petface.net/sampionsko/" target="_blank">
+                                                    <h2 class="h5 text-white my-1">Vojska Srbije na poklon dobila šampionsko štene!</h2>
+                                                    <h2 class="h5 text-white my-1">SREĆNO U SLUŽBI, MALIŠA! <i class="fa fa-smile-beam"></i></h2>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--news box-->
+                                <div class="col-6 pb-1 pl-1 pt-1">
+                                    <div class="card border-0 rounded-0 text-white overflow zoom">
+                                        <div class="position-relative">
+                                            <!--thumbnail img-->
+                                            <div class="ratio_right-cover-2 image-wrapper">
+                                                <a href="http://www.kalibar.rs/code/navigate.php?Id=108&editionId=20&articleId=79" target="_blank">
+                                                    <img class="img-fluid"
+                                                         src="~/images/PAW_PATROL_Republic (2).png">
+                                                </a>
+                                            </div>
+                                            <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+
+
+                                                <a href="http://www.kalibar.rs/code/navigate.php?Id=108&editionId=20&articleId=79" target="_blank">
+                                                    <h2 class="h5 text-white my-1">Tragači na duge staze</h2>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-md-6 pb-0 pb-md-3 pt-2 pr-md-1">
+
+                            <div class="card border-0 rounded-0 text-white overflow zoom">
+                                <div class="position-relative">
+
+                                    <div class="ratio_right-cover-2 image-wrapper">
+                                        <a href="https://www.juznevesti.com/Drushtvo/Penzionisani-vojni-psi-nasli-nove-domove.sr.html" target="_blank">
+                                            <img class="img-fluid"
+                                                 src="~/images/korona.jpg">
+                                        </a>
+                                    </div>
+                                    <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+
+
+                                        <a href="https://www.juznevesti.com/Drushtvo/Penzionisani-vojni-psi-nasli-nove-domove.sr.html" target="_blank">
+                                            <h2 class="h5 text-white my-1">Vojni veterani! Penzionisani vojni psi našli svoje domove, S. J. Južne vesti</h2>
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 col-md-6 pt-2 pl-md-1 mb-3 mb-lg-4">
+
+                            <div class="row">
+                                <div class="col-11 pb-1 pr-1 pt-1" style="margin-left:40px">
+                                    <div class="card border-0 rounded-0 text-white overflow zoom">
+                                        <div class="position-relative">
+
+                                            <div class="ratio_right-cover-2 image-wrapper">
+                                                <a href="https://www.blic.rs/slobodno-vreme/vesti/top-lista-ovo-su-psi-koji-najlakse-pronadju-posao-u-policiji-ili-vojsci/glf3tdn" target="_blank">
+                                                    <img class="img-fluid"
+                                                         src="~/images/unnamed.jpg">
+                                                </a>
+                                            </div>
+                                            <div class="position-absolute p-2 p-lg-3 b-0 w-100 bg-shadow">
+
+                                                <a href="https://www.blic.rs/slobodno-vreme/vesti/top-lista-ovo-su-psi-koji-najlakse-pronadju-posao-u-policiji-ili-vojsci/glf3tdn" target="_blank">
+                                                    <h2 class="h5 text-white my-1">Top lista! Psi koji najlakše nađu posao u policiji ili vojsci.</h2>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </section>
+                    <!--END SECTION-->
+                </div>
+            </div>
+            <!--end code-->
+
+        </div>
+    </section>
+
+
+
+    <div class="index">
+        <h2>  <i class="fa fa-paw fa-rotate--45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i> <i class="fa fa-paw" style="color:lightgrey"></i> <i class="fa fa-paw fa-rotate-45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i></h2>
+
+
+        <h2><i class="fa fa-basketball-ball"></i> Obuke</h2>
+        <p>
+            Četa za uzgoj, obuku i dresuru pasa za potrebe Vojske Srbije nalazi se u Nišu i jedinstvena je u zemlji. Dresirani psi imaju specijalne zadatke, među kojima je i provera terena uoči posete visokih državnih i vojnih delegacija.
+        </p>
+    </div>
+
+    <secton id="obukeSection">
+        <div class="index" style="height:400px; margin-top:20px; background-image: url('../images/highResolution1.jpg');">
+
+            <div class="col-lg-5 align-self-center mr-auto text-left heading-section mb-5">
+
+                <h2>Uloga pasa u savremenoj Vojsci Srbije</h2>
+
+                <p>
+                    <i class="fa fa-paw"></i> Otkrivaju skriveni eksploziv<br />
+                    <i class="fa fa-paw"></i> Detektuju prisustvo droge ili drugih zabranjenih supstanci<br />
+                    <i class="fa fa-paw"></i> Odlaze u patrole s vojnicima<br />
+                    <i class="fa fa-paw"></i> Čuvaju kasarne i druge važne vojne objekte<br />
+                    <i class="fa fa-paw"></i> Tragaju za preživelima u slučaju nesreća<br />
+                    <i class="fa fa-paw"></i> Učestvuju u potragama za nestalim osobama<br />
+                    <i class="fa fa-paw"></i> Proveravaju objekte u koje dolaze važne ličnosti<br />
+                </p>
+                <p>
+                    <a asp-controller="Obuka" asp-action="Index" target="_blank" class="btn btn-primary" style="font-size: 16px;
+    border-radius: 30px;padding: 7px 20px;">Više</a>
+                </p>
+            </div>
+            <div class="col-lg-6">
+                <img src="~/images/slajd2.png" style="position:relative; border-radius: 0.5rem;" />
+            </div>
+        </div>
+    </secton>
+
+
+
+
+    <div class="index">
+
+        <h2>  <i class="fa fa-paw fa-rotate--45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i> <i class="fa fa-paw" style="color:lightgrey"></i> <i class="fa fa-paw fa-rotate-45" style="padding:7px; font-size:1.5rem; color:lightgrey;"></i></h2>
+
+        <h2>Linkovi</h2>
+    </div>
+
+
+    <!--slide end-->
+    <!--index-->
+    <section class="team" id="linkoviSection" style="margin-top:20px; background-image: url('../images/highResolution1.jpg');">
+        <div class="container">
+
+
+            <div class="row">
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="member text-center" style="background:white">
+                        <div class="img">
+                            <img src="data:image/jpeg;base64,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" class="img-fluid" alt="">
+                        </div>
+                        <div class="m_text">
+                            <h3>Vojska</h3>
+                            <h5>Srbije</h5>
+                            <p>Zvanična internet prezentacija Vojske Srbije.</p>
+                        </div>
+                        <div class="m_menu">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a href="http://www.vs.rs/" target="_blank"><i class="fa fa-link"></i></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- single member -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="member text-center" style="background:white">
+                        <div class="img">
+                            <img src="data:image/png;base64,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" class="img-fluid" alt="">
+
+                        </div>
+                        <div class="m_text">
+                            <h3>Predsednik</h3>
+                            <h5>Rebuplike Srbije</h5>
+                            <p>Zvanična internet prezentacija predsednika Republike Srbije.</p>
+                        </div>
+                        <div class="m_menu">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a href="https://www.predsednik.rs/" target="_blank"><i class="fa fa-link"></i></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- single member -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="member text-center" style="background:white">
+                        <div class="img">
+                            <img src="~/images/znacka.jpg" class="img-fluid" alt="">
+                        </div>
+                        <div class="m_text">
+                            <h3>Ministarstvo odbrane</h3>
+                            <h5>Rebuplike Srbije</h5>
+                            <p>Zvanična internet prezentacija Ministarstva odbrane Republike Srbije.</p>
+                        </div>
+                        <div class="m_menu">
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a href="http://www.mod.gov.rs/" target="_blank"><i class="fa fa-link"></i></a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- single member -->
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+</body>
+</html>
+
+<script src="~/js/scripts.js"></script>

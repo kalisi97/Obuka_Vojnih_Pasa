@@ -1,0 +1,92 @@
+﻿@model Obuka_Vojnih_Pasa.ViewModels.ApplicationUserViewModels.EditInstruktorViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="edit">
+    <div class="container">
+        <div class="row main">
+            <div class="main-login main-center">
+                <h5>Izmena profila</h5>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Ime i prezime</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-signature" aria-hidden="true"></i></span>
+                                <input asp-for="ImePrezime" class="form-control" />
+                            </div>
+                            <span asp-validation-for="ImePrezime" class="zadatak_invalid"></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Korisničko ime</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Email</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Čin</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user-shield" aria-hidden="true"></i></span>
+                                <select asp-for="Cin" class="form-control" asp-items="ViewBag.Cinovi"></select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Obuka</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-basketball-ball fa" aria-hidden="true"></i></span>
+                                <select asp-for="ObukaId" class="form-control" asp-items="ViewBag.ObukaId"></select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group" style="padding-top:10px">
+
+                        <input type="submit" class="btn-submit" value=" Sačuvaj promene " />
+                        <input asp-action="Index" asp-controller="Home" class="btn-submit" type="submit" value="Otkaži" style="margin-left: 20px; width: 140px" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

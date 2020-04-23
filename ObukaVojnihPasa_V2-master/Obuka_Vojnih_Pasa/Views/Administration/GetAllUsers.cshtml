@@ -1,0 +1,99 @@
+﻿@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.ApplicationUser>
+
+@{
+    ViewBag.Title = "All Users";
+}
+
+
+<div class="container fadeInDown" style="padding:40px;">
+    <h3 id="confirm">
+        @if (@ViewBag.Message != string.Empty)
+        {
+            @ViewBag.Message
+            <a onclick="Ok()" style="cursor: pointer" class="btn btn-sm">OK <i class="fa fa-check-circle"></i></a>
+        }
+    </h3>
+    @if (Model.Any())
+    {
+        <a asp-action="Register" asp-controller="Administration"
+           class="btn btn-primary mb-3 btn_admin" style="width:auto; margin-top:20px">
+            Dodaj novog korisnika
+        </a>
+        <div class="korisnici" id="korisnici">
+            @foreach (var user in Model)
+            {
+
+                <div class="carda mb-3" style="width: 520px; margin-top:20px">
+
+                    <div class="card-body" style="padding:0px">
+                        <h5 class="card-title"><img src="https://img.icons8.com/nolan/64/street-view.png" />Korisnik: @user.UserName,  @user.Email  </h5>
+
+
+                    </div>
+
+                    <div class="card-footer">
+                        <form asp-action="DeleteUser" asp-route-id="@user.Id" method="post">
+                            <a asp-controller="Administration" asp-action="EditUser"
+                               asp-route-id="@user.Id" class="btn btn-primary mr-3 btn_admin">Izmeni</a>
+
+                            <span id="confirmDeleteSpan_@user.Id" style="display:none">
+                                <span>Da li ste sigurni da želite da obrišete korisnika?</span>
+                                <button type="submit" class="btn btn-primary btn_admin mr-1 ml-1">Da</button>
+                                <a class="btn btn-primary btn_admin"
+                                   onclick="confirmDelete('@user.Id', false)">Ne</a>
+                            </span>
+
+                            <span id="deleteSpan_@user.Id">
+                                <a class="btn btn-primary btn_admin"
+                                   onclick="confirmDelete('@user.Id', true)">Obriši</a>
+                            </span>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            }
+        </div>
+    }
+    else
+    {
+        <div class="carda">
+            <div class="card-header">
+                Ne postoji nijedan korisnik u sistemu.
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Koristite ovo dugme da kreirate korisnika.
+                </h5>
+                <a class="btn btn-primary btn_admin" style="width:auto"
+                   asp-controller="Administration" asp-action="Register">
+                    Dodaj novog korisnika
+                </a>
+            </div>
+        </div>
+    }
+
+</div>
+<script type="text/javascript">
+    function confirmDelete(uniqueId, isDeleteClicked) {
+        var deleteSpan = 'deleteSpan_' + uniqueId;
+        var confirmDeleteSpan = 'confirmDeleteSpan_' + uniqueId;
+
+        if (isDeleteClicked) {
+            $('#' + deleteSpan).hide();
+            $('#' + confirmDeleteSpan).show();
+        } else {
+            $('#' + deleteSpan).show();
+            $('#' + confirmDeleteSpan).hide();
+        }
+    }
+</script>
+<link href="~/content/site.css" rel="stylesheet" />
+<script>
+    function Ok() {
+        var x = document.getElementById("confirm");
+        x.style.display = "none";
+    }
+
+</script>

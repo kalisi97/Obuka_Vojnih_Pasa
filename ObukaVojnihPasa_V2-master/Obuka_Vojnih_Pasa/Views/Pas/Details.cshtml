@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.Angazovanje>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Lista angazovanja izabranog psa</h1>
+@if (Model.Count() == 0)
+{
+
+
+    <div>
+    
+        <p>
+            Ovaj pas do sada nije angazovan na zadacima!
+        </p></div>
+
+
+    <a asp-action="Index" class="btn btn-primary">Povratak na listu pasa</a>
+
+}
+else
+{
+  
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pas)
+                </th>
+               
+                <th> Datum rodjenja </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pas.Obuka)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pas.Rasa)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pas.Pol)
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pas.Ime)
+                </td>
+             
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pas.DatumRodjenja)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pas.Obuka.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pas.Rasa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Pas.Pol)
+                </td>
+                
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.Zadatak)
+                </th>
+                <th>
+                    Datum unosa ocene
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ocena)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ocena)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

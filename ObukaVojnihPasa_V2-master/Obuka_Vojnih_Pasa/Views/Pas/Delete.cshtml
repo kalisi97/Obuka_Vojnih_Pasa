@@ -1,0 +1,95 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Pas
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+
+<div class="edit">
+    <div class="container">
+        <div class="row main">
+            <div class="main-login main-center">
+                <h5>Da li ste sigurni da zelite da obrišete podatke o psu? </h5>
+                <form asp-action="Delete">
+                
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Broj zdravstvene knjižice</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-notes-medical fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.BrojZdravstveneKnjizice, new { @class = "form-control", @readonly = "readonly" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Ime psa</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-dog fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.Ime, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Rasa</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-bone fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.Rasa, new { @class = "form-control", @readonly = "readonly" })
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Pol</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-venus-mars fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.Pol, new { @class = "form-control", @readonly = "readonly" })
+                    
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Datum rođenja</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar-alt fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.DatumRodjenja,"{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Obuka</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-basketball-ball fa" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.Obuka.Naziv, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group" style="padding-top:10px">
+
+                        <input type="submit" class="btn-submit" value=" Potvrdi brisanje "/>
+                        <input asp-action="Search" class="btn-submit" type="submit" value="Otkaži" style="margin-left: 20px; width: 140px" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,141 @@
+﻿@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.Obuka>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+
+    List<Obuka_Vojnih_Pasa.Models.Domain.Obuka> obuke = ViewBag.Obuke;
+}
+
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
+
+
+<div class="main">
+    <div class="container">
+        <div class="row" style="padding:50px">
+            <div class="col-md-12">
+                <div id="MiCarousel" class="carousel slide" data-ride="carousel" data-interval="10000">
+                    <ol class="carousel-indicators">
+                        <li data-target="#MiCarousel" data-slide-to="0" class="carousel-pagination active"></li>
+                        <li data-target="#MiCarousel" data-slide-to="1" class="carousel-pagination"></li>
+                        <li data-target="#MiCarousel" data-slide-to="2" class="carousel-pagination"></li>
+                        <li data-target="#MiCarousel" data-slide-to="3" class="carousel-pagination"></li>
+                        <li data-target="#MiCarousel" data-slide-to="4" class="carousel-pagination"></li>
+
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-md-6 div-l">
+                                    <div class="carousel-img" style="background-image: url('../images/nikola.jpg');">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 div-r">
+                                    <h3>Obuke pasa u Vojsci Srbije</h3>
+                                  
+                                    <hr>
+                                    <h3>
+                                        Obuka pasa je od velike važnosti za vojsku, ali ne samo za vojsku. Ovi psi se obučavaju ne samo za čuvarsku službu, već i za borbene zadatke, kao i da pronalaze i neeksplodirana minska sredstva, da pronalaze one koji su stradali u elementarnoj nepogodi, a u stanju su da pronađu narkotike. Ovako obučeni psi u stanju da pomognu svim građanima, ali i da država Srbija bolje funkcioniše.
+                                    </h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-6 div-l">
+                                    <div class="carousel-img" style="background-image: url('../images/slika4.png');">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 div-r">
+                                    <h3>@obuke.ElementAt(0).Naziv</h3>
+                                    <hr>
+                                    <h3>Trajanje obuke u mesecima: @obuke.ElementAt(0).Trajanje</h3>
+
+                                    <h3>@obuke.ElementAt(0).Opis</h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-6 div-l">
+                                    <div class="carousel-img" style="background-image: url('../images/pozadina4.jpg');">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 div-r">
+                                    <h3>@obuke.ElementAt(1).Naziv</h3>
+                                    <hr>
+                                    <h3>Trajanje obuke u mesecima: @obuke.ElementAt(1).Trajanje</h3>
+                                    <h3>@obuke.ElementAt(1).Opis</h3>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-6 div-l">
+                                    <div class="carousel-img" style="background-image: url('../images/o.jpg');">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 div-r">
+                                    <h3>@obuke.ElementAt(2).Naziv</h3>
+                                    <hr>
+                                    <h3>Trajanje obuke u mesecima: @obuke.ElementAt(2).Trajanje</h3>
+                                    <h3>@obuke.ElementAt(2).Opis</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-6 div-l">
+                                    <div class="carousel-img" style="background-image: url('../images/slika11.jpg');">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 div-r">
+                                    <h3>@obuke.ElementAt(3).Naziv</h3>
+                                    <hr>
+                                    <h3>Trajanje obuke u mesecima: @obuke.ElementAt(3).Trajanje</h3>
+                                    <h3>@obuke.ElementAt(3).Opis</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-6 div-l">
+                                    <div class="carousel-img" style="background-image: url('../images/slika10.png');">
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6 div-r">
+                                    <h3>@obuke.ElementAt(4).Naziv</h3>
+                                    <hr>
+                                    <h3>Trajanje obuke u mesecima: @obuke.ElementAt(4).Trajanje</h3>
+                                    <h3>@obuke.ElementAt(4).Opis</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <a class="carousel-control-prev" href="#MiCarousel" role="button" data-slide="prev">  <span class="sr-only">Previous</span> </a> <a class="carousel-control-next" href="#MiCarousel" role="button" data-slide="next">  <span class="sr-only">Next</span> </a>
+            </div>
+
+
+
+           
+        </div>
+            </div>
+        </div>

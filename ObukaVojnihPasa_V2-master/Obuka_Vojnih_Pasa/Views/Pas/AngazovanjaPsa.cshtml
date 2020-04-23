@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.Angazovanje>
+
+
+<link href="~/lib/sortable/Contents/bootstrap-sortable.css" rel="stylesheet" type="text/css">
+
+@if (Model.Count() == 0)
+{
+    if (ViewBag.Init == "")
+    {
+
+    }
+    else
+    {
+        <table class="table table-hover" id="tblAngazovanja">
+
+            <tr>
+
+                <th>
+                    <h3><i class="fa fa-exclamation-triangle"></i>  Lista je prazna</h3>
+                </th>
+
+
+            </tr>
+
+        </table>
+    }
+}
+else
+{
+
+    <table class="table sortable" cellpadding="0" cellspacing="0" id="tblAngazovanja">
+        <thead id="tbl-header">
+            <tr>
+
+                <th>
+                    <i class="fa fa-tasks"></i> Zadatak
+                </th>
+                <th>
+                    <i class="fa fa-map-marked-alt"></i> Teren
+                </th>
+                <th>
+                    <i class="fa fa-calendar-check"></i>  Datum
+                </th>
+                <th>
+                    Ocena
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.Teren)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ocena)
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+}
+
+<script src="~/lib/sortable/Scripts/bootstrap-sortable.js"></script>
+

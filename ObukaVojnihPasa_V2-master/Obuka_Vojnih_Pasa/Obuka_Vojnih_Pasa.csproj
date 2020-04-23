@@ -1,0 +1,820 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Repositories\**" />
+    <Content Remove="Repositories\**" />
+    <EmbeddedResource Remove="Repositories\**" />
+    <None Remove="Repositories\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Services\Implementation\AngazovanjeService.cs" />
+    <Content Include="Services\Implementation\InstruktorService.cs" />
+    <Content Include="Services\Implementation\ObukaService.cs" />
+    <Content Include="Services\Implementation\PasService.cs" />
+    <Content Include="Services\Implementation\ZadatakService.cs" />
+    <Content Include="Services\Interafaces\IAngazovanjeService.cs" />
+    <Content Include="Services\Interafaces\IInstruktorService.cs" />
+    <Content Include="Services\Interafaces\IObukaService.cs" />
+    <Content Include="Services\Interafaces\IPasService.cs" />
+    <Content Include="Services\Interafaces\IZadatakService.cs" />
+    <Content Include="Services\IService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.3" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Log4Net.AspNetCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.8.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.2" />
+    <PackageReference Include="PagedList.MVC" Version="4.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Administration\Register.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Angazovanje\Angazovanja.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Angazovanje\Update.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Angazovanje\Edit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Angazovanje\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Home\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Obuka\Edit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Obuka\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\AngazovanjaPsa.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\Create.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\Delete.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\Edit.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\Psi.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\Search.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\Statistika.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\UkStatistika.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Pas\_Psi.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\AccessDenied.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\NotFound.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_Layout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Shared\_ValidationScriptsPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Zadatak\Details.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Zadatak\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\Zadatak\Zadaci.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Views\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-grid.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-grid.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-grid.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-grid.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-reboot.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-reboot.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-reboot.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap-reboot.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\css\bootstrap.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.eot">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.ttf">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\lib\bootstrap\dist\js\npm.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Account\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\Login.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Account\Login.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\CreateRole.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\EditRole.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\EditUser.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\EditUsersInRole.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\GetAllRoles.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\GetAllUsers.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\ManageUserClaims.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\ManageUserRoles.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Administration\NotFound.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\CreateRole.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\CreateRole.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\EditRole.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\EditRole.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\EditUser.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\EditUser.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\EditUsersInRole.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\EditUsersInRole.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\GetAllRoles.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\GetAllRoles.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\GetAllUsers.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\GetAllUsers.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\ManageUserClaims.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\ManageUserClaims.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\ManageUserRoles.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\ManageUserRoles.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Views\Administration\NotFound.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Administration\NotFound.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\bootstrap\CHANGELOG.md" />
+    <None Include="wwwroot\lib\bootstrap\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\lib\bootstrap\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\lib\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-theme.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\lib\bootstrap\dist\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\dist\js\npm.js" />
+    <None Include="wwwroot\lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\lib\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="wwwroot\lib\bootstrap\Gemfile" />
+    <None Include="wwwroot\lib\bootstrap\Gemfile.lock" />
+    <None Include="wwwroot\lib\bootstrap\Gruntfile.js" />
+    <None Include="wwwroot\lib\bootstrap\grunt\.jshintrc" />
+    <None Include="wwwroot\lib\bootstrap\grunt\bs-commonjs-generator.js" />
+    <None Include="wwwroot\lib\bootstrap\grunt\bs-glyphicons-data-generator.js" />
+    <None Include="wwwroot\lib\bootstrap\grunt\bs-lessdoc-parser.js" />
+    <None Include="wwwroot\lib\bootstrap\grunt\bs-raw-files-generator.js" />
+    <None Include="wwwroot\lib\bootstrap\grunt\change-version.js" />
+    <None Include="wwwroot\lib\bootstrap\grunt\sauce_browsers.yml" />
+    <None Include="wwwroot\lib\bootstrap\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\lib\bootstrap\js\.jscsrc" />
+    <None Include="wwwroot\lib\bootstrap\js\.jshintrc" />
+    <None Include="wwwroot\lib\bootstrap\js\affix.js" />
+    <None Include="wwwroot\lib\bootstrap\js\alert.js" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\lib\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\lib\bootstrap\js\button.js" />
+    <None Include="wwwroot\lib\bootstrap\js\carousel.js" />
+    <None Include="wwwroot\lib\bootstrap\js\collapse.js" />
+    <None Include="wwwroot\lib\bootstrap\js\dropdown.js" />
+    <None Include="wwwroot\lib\bootstrap\js\modal.js" />
+    <None Include="wwwroot\lib\bootstrap\js\popover.js" />
+    <None Include="wwwroot\lib\bootstrap\js\scrollspy.js" />
+    <None Include="wwwroot\lib\bootstrap\js\tab.js" />
+    <None Include="wwwroot\lib\bootstrap\js\tooltip.js" />
+    <None Include="wwwroot\lib\bootstrap\js\transition.js" />
+    <None Include="wwwroot\lib\bootstrap\less\.csslintrc" />
+    <None Include="wwwroot\lib\bootstrap\less\alerts.less" />
+    <None Include="wwwroot\lib\bootstrap\less\badges.less" />
+    <None Include="wwwroot\lib\bootstrap\less\bootstrap.less" />
+    <None Include="wwwroot\lib\bootstrap\less\breadcrumbs.less" />
+    <None Include="wwwroot\lib\bootstrap\less\button-groups.less" />
+    <None Include="wwwroot\lib\bootstrap\less\buttons.less" />
+    <None Include="wwwroot\lib\bootstrap\less\carousel.less" />
+    <None Include="wwwroot\lib\bootstrap\less\close.less" />
+    <None Include="wwwroot\lib\bootstrap\less\code.less" />
+    <None Include="wwwroot\lib\bootstrap\less\component-animations.less" />
+    <None Include="wwwroot\lib\bootstrap\less\dropdowns.less" />
+    <None Include="wwwroot\lib\bootstrap\less\forms.less" />
+    <None Include="wwwroot\lib\bootstrap\less\glyphicons.less" />
+    <None Include="wwwroot\lib\bootstrap\less\grid.less" />
+    <None Include="wwwroot\lib\bootstrap\less\input-groups.less" />
+    <None Include="wwwroot\lib\bootstrap\less\jumbotron.less" />
+    <None Include="wwwroot\lib\bootstrap\less\labels.less" />
+    <None Include="wwwroot\lib\bootstrap\less\list-group.less" />
+    <None Include="wwwroot\lib\bootstrap\less\media.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\alerts.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\background-variant.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\border-radius.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\buttons.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\center-block.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\clearfix.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\forms.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\gradients.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\grid-framework.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\grid.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\hide-text.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\image.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\labels.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\list-group.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\nav-divider.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\nav-vertical-align.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\opacity.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\pagination.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\panels.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\progress-bar.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\reset-filter.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\reset-text.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\resize.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\responsive-visibility.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\size.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\tab-focus.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\table-row.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\text-emphasis.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\text-overflow.less" />
+    <None Include="wwwroot\lib\bootstrap\less\mixins\vendor-prefixes.less" />
+    <None Include="wwwroot\lib\bootstrap\less\modals.less" />
+    <None Include="wwwroot\lib\bootstrap\less\navbar.less" />
+    <None Include="wwwroot\lib\bootstrap\less\navs.less" />
+    <None Include="wwwroot\lib\bootstrap\less\normalize.less" />
+    <None Include="wwwroot\lib\bootstrap\less\pager.less" />
+    <None Include="wwwroot\lib\bootstrap\less\pagination.less" />
+    <None Include="wwwroot\lib\bootstrap\less\panels.less" />
+    <None Include="wwwroot\lib\bootstrap\less\popovers.less" />
+    <None Include="wwwroot\lib\bootstrap\less\print.less" />
+    <None Include="wwwroot\lib\bootstrap\less\progress-bars.less" />
+    <None Include="wwwroot\lib\bootstrap\less\responsive-embed.less" />
+    <None Include="wwwroot\lib\bootstrap\less\responsive-utilities.less" />
+    <None Include="wwwroot\lib\bootstrap\less\scaffolding.less" />
+    <None Include="wwwroot\lib\bootstrap\less\tables.less" />
+    <None Include="wwwroot\lib\bootstrap\less\theme.less" />
+    <None Include="wwwroot\lib\bootstrap\less\thumbnails.less" />
+    <None Include="wwwroot\lib\bootstrap\less\tooltip.less" />
+    <None Include="wwwroot\lib\bootstrap\less\type.less" />
+    <None Include="wwwroot\lib\bootstrap\less\utilities.less" />
+    <None Include="wwwroot\lib\bootstrap\less\variables.less" />
+    <None Include="wwwroot\lib\bootstrap\less\wells.less" />
+    <None Include="wwwroot\lib\bootstrap\LICENSE" />
+    <None Include="wwwroot\lib\bootstrap\nuget\bootstrap.less.nuspec" />
+    <None Include="wwwroot\lib\bootstrap\nuget\bootstrap.nuspec" />
+    <None Include="wwwroot\lib\bootstrap\nuget\MyGet.ps1" />
+    <None Include="wwwroot\lib\bootstrap\package.js" />
+    <None Include="wwwroot\lib\bootstrap\README.md" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\build\release.js" />
+    <None Include="wwwroot\lib\jquery-validation\changelog.md" />
+    <None Include="wwwroot\lib\jquery-validation\CONTRIBUTING.md" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+    <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+    <None Include="wwwroot\lib\jquery-validation\Gruntfile.js" />
+    <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+    <None Include="wwwroot\lib\jquery-validation\README.md" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\accept.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\additional.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\alphanumeric.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\bankaccountNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\bankorgiroaccountNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\bic.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\cifES.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\cpfBR.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\creditcard.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\creditcardtypes.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\currency.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\dateFA.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\dateITA.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\dateNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\extension.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\giroaccountNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\iban.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\integer.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\ipv4.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\ipv6.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\lettersonly.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\letterswithbasicpunc.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\mobileNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\mobileUK.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\nieES.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\nifES.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\notEqualTo.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\nowhitespace.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\pattern.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\phoneNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\phonesUK.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\phoneUK.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\phoneUS.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\postalcodeBR.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\postalCodeCA.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\postalcodeIT.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\postalcodeNL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\postcodeUK.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\require_from_group.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\skip_or_fill_minimum.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\statesUS.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\strippedminlength.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\time.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\time12h.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\url2.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\vinUS.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\zipcodeUS.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\additional\ziprange.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\ajax.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\core.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ar.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_az.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_bg.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_bn_BD.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ca.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_cs.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_da.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_de.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_el.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_es.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_es_AR.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_es_PE.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_et.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_eu.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_fa.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_fi.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_fr.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ge.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_gl.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_he.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_hr.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_hu.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_hy_AM.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_id.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_is.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_it.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ja.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ka.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_kk.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ko.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_lt.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_lv.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_mk.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_my.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_nl.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_no.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_pl.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_pt_BR.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_pt_PT.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ro.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ru.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_si.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_sk.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_sl.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_sr.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_sr_lat.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_sv.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_th.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_tj.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_tr.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_uk.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_ur.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_vi.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_zh.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\messages_zh_TW.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\methods_de.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\methods_es_CL.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\methods_fi.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\methods_nl.js" />
+    <None Include="wwwroot\lib\jquery-validation\src\localization\methods_pt.js" />
+    <None Include="wwwroot\lib\jquery\dist\core.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.slim.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.slim.min.js" />
+    <None Include="wwwroot\lib\jquery\dist\jquery.slim.min.map" />
+    <None Include="wwwroot\lib\jquery\external\sizzle\dist\sizzle.js" />
+    <None Include="wwwroot\lib\jquery\external\sizzle\dist\sizzle.min.js" />
+    <None Include="wwwroot\lib\jquery\external\sizzle\dist\sizzle.min.map" />
+    <None Include="wwwroot\lib\jquery\README.md" />
+    <None Include="wwwroot\lib\jquery\src\ajax.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\jsonp.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\load.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\parseXML.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\script.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\var\location.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\var\nonce.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\var\rquery.js" />
+    <None Include="wwwroot\lib\jquery\src\ajax\xhr.js" />
+    <None Include="wwwroot\lib\jquery\src\attributes.js" />
+    <None Include="wwwroot\lib\jquery\src\attributes\attr.js" />
+    <None Include="wwwroot\lib\jquery\src\attributes\classes.js" />
+    <None Include="wwwroot\lib\jquery\src\attributes\prop.js" />
+    <None Include="wwwroot\lib\jquery\src\attributes\support.js" />
+    <None Include="wwwroot\lib\jquery\src\attributes\val.js" />
+    <None Include="wwwroot\lib\jquery\src\callbacks.js" />
+    <None Include="wwwroot\lib\jquery\src\core.js" />
+    <None Include="wwwroot\lib\jquery\src\core\access.js" />
+    <None Include="wwwroot\lib\jquery\src\core\DOMEval.js" />
+    <None Include="wwwroot\lib\jquery\src\core\init.js" />
+    <None Include="wwwroot\lib\jquery\src\core\nodeName.js" />
+    <None Include="wwwroot\lib\jquery\src\core\parseHTML.js" />
+    <None Include="wwwroot\lib\jquery\src\core\ready-no-deferred.js" />
+    <None Include="wwwroot\lib\jquery\src\core\ready.js" />
+    <None Include="wwwroot\lib\jquery\src\core\readyException.js" />
+    <None Include="wwwroot\lib\jquery\src\core\stripAndCollapse.js" />
+    <None Include="wwwroot\lib\jquery\src\core\support.js" />
+    <None Include="wwwroot\lib\jquery\src\core\var\rsingleTag.js" />
+    <None Include="wwwroot\lib\jquery\src\css.js" />
+    <None Include="wwwroot\lib\jquery\src\css\addGetHookIf.js" />
+    <None Include="wwwroot\lib\jquery\src\css\adjustCSS.js" />
+    <None Include="wwwroot\lib\jquery\src\css\curCSS.js" />
+    <None Include="wwwroot\lib\jquery\src\css\hiddenVisibleSelectors.js" />
+    <None Include="wwwroot\lib\jquery\src\css\showHide.js" />
+    <None Include="wwwroot\lib\jquery\src\css\support.js" />
+    <None Include="wwwroot\lib\jquery\src\css\var\cssExpand.js" />
+    <None Include="wwwroot\lib\jquery\src\css\var\getStyles.js" />
+    <None Include="wwwroot\lib\jquery\src\css\var\isHiddenWithinTree.js" />
+    <None Include="wwwroot\lib\jquery\src\css\var\rmargin.js" />
+    <None Include="wwwroot\lib\jquery\src\css\var\rnumnonpx.js" />
+    <None Include="wwwroot\lib\jquery\src\css\var\swap.js" />
+    <None Include="wwwroot\lib\jquery\src\data.js" />
+    <None Include="wwwroot\lib\jquery\src\data\Data.js" />
+    <None Include="wwwroot\lib\jquery\src\data\var\acceptData.js" />
+    <None Include="wwwroot\lib\jquery\src\data\var\dataPriv.js" />
+    <None Include="wwwroot\lib\jquery\src\data\var\dataUser.js" />
+    <None Include="wwwroot\lib\jquery\src\deferred.js" />
+    <None Include="wwwroot\lib\jquery\src\deferred\exceptionHook.js" />
+    <None Include="wwwroot\lib\jquery\src\deprecated.js" />
+    <None Include="wwwroot\lib\jquery\src\dimensions.js" />
+    <None Include="wwwroot\lib\jquery\src\effects.js" />
+    <None Include="wwwroot\lib\jquery\src\effects\animatedSelector.js" />
+    <None Include="wwwroot\lib\jquery\src\effects\Tween.js" />
+    <None Include="wwwroot\lib\jquery\src\event.js" />
+    <None Include="wwwroot\lib\jquery\src\event\ajax.js" />
+    <None Include="wwwroot\lib\jquery\src\event\alias.js" />
+    <None Include="wwwroot\lib\jquery\src\event\focusin.js" />
+    <None Include="wwwroot\lib\jquery\src\event\support.js" />
+    <None Include="wwwroot\lib\jquery\src\event\trigger.js" />
+    <None Include="wwwroot\lib\jquery\src\exports\amd.js" />
+    <None Include="wwwroot\lib\jquery\src\exports\global.js" />
+    <None Include="wwwroot\lib\jquery\src\jquery.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\buildFragment.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\getAll.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\setGlobalEval.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\support.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\var\rcheckableType.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\var\rscriptType.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\var\rtagName.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\wrapMap.js" />
+    <None Include="wwwroot\lib\jquery\src\manipulation\_evalUrl.js" />
+    <None Include="wwwroot\lib\jquery\src\offset.js" />
+    <None Include="wwwroot\lib\jquery\src\queue.js" />
+    <None Include="wwwroot\lib\jquery\src\queue\delay.js" />
+    <None Include="wwwroot\lib\jquery\src\selector-native.js" />
+    <None Include="wwwroot\lib\jquery\src\selector-sizzle.js" />
+    <None Include="wwwroot\lib\jquery\src\selector.js" />
+    <None Include="wwwroot\lib\jquery\src\serialize.js" />
+    <None Include="wwwroot\lib\jquery\src\traversing.js" />
+    <None Include="wwwroot\lib\jquery\src\traversing\findFilter.js" />
+    <None Include="wwwroot\lib\jquery\src\traversing\var\dir.js" />
+    <None Include="wwwroot\lib\jquery\src\traversing\var\rneedsContext.js" />
+    <None Include="wwwroot\lib\jquery\src\traversing\var\siblings.js" />
+    <None Include="wwwroot\lib\jquery\src\var\arr.js" />
+    <None Include="wwwroot\lib\jquery\src\var\class2type.js" />
+    <None Include="wwwroot\lib\jquery\src\var\concat.js" />
+    <None Include="wwwroot\lib\jquery\src\var\document.js" />
+    <None Include="wwwroot\lib\jquery\src\var\documentElement.js" />
+    <None Include="wwwroot\lib\jquery\src\var\fnToString.js" />
+    <None Include="wwwroot\lib\jquery\src\var\getProto.js" />
+    <None Include="wwwroot\lib\jquery\src\var\hasOwn.js" />
+    <None Include="wwwroot\lib\jquery\src\var\indexOf.js" />
+    <None Include="wwwroot\lib\jquery\src\var\ObjectFunctionString.js" />
+    <None Include="wwwroot\lib\jquery\src\var\pnum.js" />
+    <None Include="wwwroot\lib\jquery\src\var\push.js" />
+    <None Include="wwwroot\lib\jquery\src\var\rcssNum.js" />
+    <None Include="wwwroot\lib\jquery\src\var\rnothtmlwhite.js" />
+    <None Include="wwwroot\lib\jquery\src\var\slice.js" />
+    <None Include="wwwroot\lib\jquery\src\var\support.js" />
+    <None Include="wwwroot\lib\jquery\src\var\toString.js" />
+    <None Include="wwwroot\lib\jquery\src\wrap.js" />
+    <None Include="wwwroot\sweetalert2\CHANGELOG.md" />
+    <None Include="wwwroot\sweetalert2\dist\sweetalert2.all.js" />
+    <None Include="wwwroot\sweetalert2\dist\sweetalert2.all.min.js" />
+    <None Include="wwwroot\sweetalert2\dist\sweetalert2.js" />
+    <None Include="wwwroot\sweetalert2\dist\sweetalert2.min.js" />
+    <None Include="wwwroot\sweetalert2\LICENSE" />
+    <None Include="wwwroot\sweetalert2\README.md" />
+    <None Include="wwwroot\sweetalert2\src\constants.js" />
+    <None Include="wwwroot\sweetalert2\src\globalState.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\buttons-handlers.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\close.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\enable-disable-elements.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\getInput.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\hideLoading.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\keydown-handler.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\popup-click-handler.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\progress-steps.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\show-reset-validation-error.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\update.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\_destroy.js" />
+    <None Include="wwwroot\sweetalert2\src\instanceMethods\_main.js" />
+    <None Include="wwwroot\sweetalert2\src\privateMethods.js" />
+    <None Include="wwwroot\sweetalert2\src\privateProps.js" />
+    <None Include="wwwroot\sweetalert2\src\scss\_animations.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_body.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_core.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_mixins.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_polyfills.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_theming.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_toasts-animations.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_toasts-body.scss" />
+    <None Include="wwwroot\sweetalert2\src\scss\_toasts.scss" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\argsToParams.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\dom.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\fire.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\mixin.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\queue.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\showLoading.js" />
+    <None Include="wwwroot\sweetalert2\src\staticMethods\timer.js" />
+    <None Include="wwwroot\sweetalert2\src\SweetAlert.js" />
+    <None Include="wwwroot\sweetalert2\src\sweetalert2.js" />
+    <None Include="wwwroot\sweetalert2\src\sweetalert2.scss" />
+    <None Include="wwwroot\sweetalert2\src\utils\aria.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\classes.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\defaultInputValidators.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\DismissReason.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\animationEndEvent.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\domUtils.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\getters.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\index.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\init.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\inputUtils.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\measureScrollbar.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\parseHtmlToContainer.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\render.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderActions.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderCloseButton.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderContainer.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderContent.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderFooter.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderHeader.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderIcon.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderImage.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderInput.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderPopup.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderProgressSteps.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\dom\renderers\renderTitle.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\ieFix.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\iosFix.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\isNodeEnv.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\openPopup.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\params.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\scrollbarFix.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\setParameters.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\Timer.js" />
+    <None Include="wwwroot\sweetalert2\src\utils\utils.js" />
+    <None Include="wwwroot\sweetalert2\src\variables.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\sweetalert2\sweetalert2.d.ts" />
+  </ItemGroup>
+
+</Project>

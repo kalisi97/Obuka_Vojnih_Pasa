@@ -1,0 +1,119 @@
+﻿@using Obuka_Vojnih_Pasa.Models.Domain;
+@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.Angazovanje>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+@inject UserManager<ApplicationUser> userManager
+
+
+@{Instruktor instruktor = null; }
+@{
+    @if (!User.IsInRole("Admin"))
+        instruktor = await userManager.FindByIdAsync(userManager.GetUserId(User)) as Instruktor;
+}
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+
+
+
+@if (Model.Count() == 0)
+{
+    <h3>Nije pronađeno nijedano angažovanje po unetom kriterijumu pretrage.</h3>
+}
+else
+{
+
+
+    <h3 id="confirm" style="padding-top: 30px; color: white; font-size: 1.5rem;">
+        <img src="https://img.icons8.com/doodle/48/000000/checklist--v1.png" />   Lista svih pasa angazovanih na izabranom zadatku
+
+    </h3>
+
+    <div>
+        <table class="table" style="color:white" id="details">
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Pas
+                    </th>
+                    <th>
+                        Naziv zadatka
+                    </th>
+                    <th>
+                        Datum realizacije zadatka
+                    </th>
+                    <th>
+                        Datum unosa ocene
+                    </th>
+                    <th>
+                        Ocena
+                    </th>
+
+                    <th>
+                        Izmeni podatke
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <i class="fas fa-paw"></i>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pas.Ime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Zadatak.Datum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ocena)
+                        </td>
+                        @{
+                            var parms = new Dictionary<string, string>
+                                                                                                {
+                { "PasId",item.PasId.ToString() },
+                { "ZadatakId",item.ZadatakId.ToString() }
+                        };
+                        }
+
+                        @if ((instruktor != null && item.Pas.ObukaId == instruktor.ObukaId) || User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms" target="_blank" title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
+
+                            </td>
+
+                        }
+                        else
+                        {
+                            <td>
+                                <i class="fas fa-user-alt-slash" style="color:snow;margin-left:20px" title="Nemate dozvolu za pristup ovoj opciji"></i>
+                            </td>
+                        }
+
+
+
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}

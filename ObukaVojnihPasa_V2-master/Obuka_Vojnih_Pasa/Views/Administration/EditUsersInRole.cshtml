@@ -1,0 +1,52 @@
+﻿@model List<Obuka_Vojnih_Pasa.ViewModels.UserRoleViewModel>
+
+@{
+    var roleId = ViewBag.roleId;
+}
+<div class="container fadeInDown" style="padding: 40px;">
+    <h1 class="font-weight-light text-center  mt-4 mb-0" style="padding-top:20px; font-size:26px">Dodaj ili ukloni korisnike sa datom ulogom</h1>
+    <hr class="mt-2 mb-5">
+
+    <form method="post">
+        <div class="carda">
+
+            <div class="card-body">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+
+                    <div class="form-row">
+
+
+
+                        <div class="form-group col-1">
+                            <input type="hidden" asp-for="@Model[i].UserId" />
+                            <input type="hidden" asp-for="@Model[i].UserName" />
+                        </div>
+                        <div class="form-group col-1" style="padding-top:2px">
+                            <input asp-for="@Model[i].IsSelected" class="form-check-input" style="color:black;" />
+                        </div>
+                        <div class="form-group col-6">
+                            <label class="form-check-label" asp-for="@Model[i].IsSelected">
+                                Korisničko ime: <strong style="color:darkviolet">  @Model[i].UserName</strong>, Email: <strong style="color:darkviolet">  @Model[i].Email</strong>
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                }
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Sačuvaj izmene" class="btn btn-primary btn_admin"
+                       style="width:auto" />
+                <a asp-action="EditRole" asp-route-id="@roleId"
+                   class="btn btn-primary btn_admin ml-2" style="width:auto">Otkaži</a>
+            </div>
+        </div>
+    </form>
+</div>
+<link href="~/content/site.css" rel="stylesheet" />
+© 2020 GitHub, Inc.

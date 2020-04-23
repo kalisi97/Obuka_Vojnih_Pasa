@@ -1,0 +1,93 @@
+﻿@model Obuka_Vojnih_Pasa.ViewModels.EditUserViewModel
+
+@{
+    ViewBag.Title = "Edit User";
+}
+
+
+<div class="container fadeInDown" style="padding: 30px;">
+    <form method="post" class="mt-3">
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <input type="hidden" asp-for="Id" disabled class="form-control">
+            </div>
+        </div>
+
+
+        <div class="form-row">
+
+            <div class="form-group col-1">
+                <label style="padding-top:5px; font-size:1.5rem">Korisničko ime</label>
+                <label style="padding-top:5px; font-size:1.5rem">Email</label>
+            </div>
+            <div class="form-group col-md-3">
+                <input asp-for="UserName" class="form-control" style="width:150px">
+                <span asp-validation-for="UserName" class="text-danger"></span>
+
+                <input asp-for="Email" class="form-control" style="width:150px; margin-top:15px">
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-md-4 ml-4" style="padding-top:15px">
+
+                <button type="submit" class="btn btn-primary btn_admin">Potvrdi</button>
+                <a asp-action="GetAllUsers" class="btn btn-primary btn_admin ml-1">Otkaži</a>
+
+            </div>
+
+        </div>
+
+
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="carda">
+            <div class="card-header">
+                <h3>User Roles</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Roles.Any())
+                {
+                    foreach (var role in Model.Roles)
+                    {
+                        <h5 class="card-title">@role</h5>
+                    }
+                }
+                else
+                {
+                    <h5 class="card-title">Nijedna trenutno.</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-action="ManageUserRoles" asp-route-userId="@Model.Id" class="btn btn-primary btn_admin">
+                    Podešavanja uloga
+                </a>
+            </div>
+        </div>
+
+        <div class="carda mt-3">
+            <div class="card-header">
+                <h3>User Claims</h3>
+            </div>
+            <div class="card-body">
+                @if (Model.Claims.Any())
+                {
+                    foreach (var claim in Model.Claims)
+                    {
+                        <h5 class="card-title">@claim</h5>
+                    }
+                }
+                else
+                {
+                    <h5 class="card-title">Nijedna trenutno.</h5>
+                }
+            </div>
+            <div class="card-footer">
+                <a asp-action="ManageUserClaims" asp-route-userId="@Model.Id"
+                   style="width:auto" class="btn btn-primary btn_admin">
+                    Podešavanja dozvola
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+<link href="~/content/site.css" rel="stylesheet" />

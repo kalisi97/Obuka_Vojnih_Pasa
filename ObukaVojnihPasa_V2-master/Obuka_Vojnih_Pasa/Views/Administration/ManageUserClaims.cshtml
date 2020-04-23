@@ -1,0 +1,48 @@
+﻿@model Obuka_Vojnih_Pasa.ViewModels.UserClaimsViewModel
+
+
+
+
+
+
+    <div class="container fadeInDown" style="padding: 30px;">
+
+        <h1 class="font-weight-light text-center  mt-4 mb-0" style="padding-top:20px; font-size:26px">Podešavanja dozvola izabranog korisnika</h1>
+        <hr class="mt-2 mb-5">
+        <form method="post" style="padding-top:30px">
+            <div class="carda">
+
+                <div class="card-body">
+                    @for (int i = 0; i < Model.Claims.Count; i++)
+                    {
+
+                        <div class="form-row">
+
+                            <div class="form-group col-1">
+                                <input type="hidden" asp-for="@Model.Claims[i].ClaimType" />
+                            </div>
+                            <div class="form-group col-1" style="padding-top:2px">
+                                <input asp-for="@Model.Claims[i].IsSelected" class="form-check-input" />
+                            </div>
+                            <div class="form-group col-6">
+                                <label class="form-check-label" asp-for="@Model.Claims[i].IsSelected">
+                                     <strong style="color:darkviolet">  @Model.Claims[i].ClaimType</strong>
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    }
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="Potvrdi izmene" class="btn btn-primary btn_admin"
+                           style="width:auto" />
+                    <a asp-action="EditUser" asp-route-id="@Model.UserId"
+                       class="btn btn-primary btn_admin ml-2" style="width:auto">Otkaži</a>
+                </div>
+            </div>
+        </form>
+        </div>
+        <link href="~/content/site.css" rel="stylesheet" />

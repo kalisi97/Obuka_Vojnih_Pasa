@@ -1,0 +1,174 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Zadatak
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+@{
+    ViewData["Title"] = "Index";
+    List<string> zadaci = ViewBag.Zadaci;
+}
+
+
+
+ <link href="~/content/site.css" rel="stylesheet" />
+
+<br />
+<h3 id="confirm">
+    @if (@ViewBag.Message != string.Empty)
+    {
+        @ViewBag.Message
+        <a onclick="Ok()" style="cursor: pointer" class="btn btn-sm">OK <i class="fa fa-check-circle"></i></a>
+    }
+</h3>
+
+<form style="padding-top: 30px">
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <input type="text" id="zadatak" name="zadatak" placeholder="Unesite naziv zadatka ili mesto .." class="form-control">
+        </div>
+
+
+        <div class="form-group col-md-7">
+            <input id="btnSearchZadaci" type="button" class="btn btn-sm btn-primary btn-outline-light" value="Pretraži" />
+        </div>
+        <div class="form-group col-2">
+            @if ((await authorizationService.AuthorizeAsync(User, "ZadatakPolicy")).Succeeded)
+            {
+                <a asp-action="Create" class="btn btn-sm btn-primary btn-outline-light"><i class="fa fa-paw"></i> Dodaj novi zadatak</a>
+
+            }
+
+        </div>
+    </div>
+</form>
+
+<div id="zadaci"> </div>
+
+
+
+
+<div class="statContainer">
+
+
+    <a class="nounderline" target="_blank" asp-action="Search" asp-controller="Pas" title="Službeni psi u vojsci">
+        <div class="statBubbleContainer">
+            <div class="statBubble websitesLaunched">
+                
+            </div>
+            <h3>Službeni psi</h3>
+            <div class="statRedirect">
+
+                <span data-title="Lista pasa →">Lista pasa →</span>
+            </div>
+        </div>
+    </a>
+   
+
+
+    <a class="nounderline" target="_blank" title="Istorija svih svih angažovanja" asp-action="Index" asp-controller="Angazovanje">
+        <div class="statBubbleContainer">
+            <div class="statBubble teamSize">
+                
+            </div>
+            <h3>Angažovanja</h3>
+            <div class="statRedirect"><span data-title="Lista angažovanja →">Lista angažovanja →</span> </div>
+        </div>
+    </a>
+
+    <a class="nounderline" title="Prikaz uspešnosti angažovanih pasa po zadatku">
+        <div class="statBubbleContainer">
+            <div class="statBubble topSEORank">
+                
+            </div>
+                <h3>Obavljeni zadaci</h3>
+                <div class="statRedirect"><span data-title="Izveštaj →" onclick="myFunction()" id="btn">Izveštaj →</span> </div>
+
+            </div>
+</a>
+
+   
+
+</div>
+
+<div id="chartContainer" style="height: 370px; width: 100%; display:none; padding-top:20px">
+</div>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="~/js/scripts.js"></script>
+<script> function myFunction() {
+      var x = document.getElementById("chartContainer");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+        }
+
+         CanvasJS.addColorSet("greenShades",
+                [
+
+                    "#cd23b2",
+                    "dodgerblue"
+              
+                               
+                ]);
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+        colorSet: "greenShades",
+            animationEnabled: true,
+    backgroundColor: "rgba(0,0,0,0.75)",
+	theme: "dark2",
+	exportEnabled: true,
+	title: {
+		text: "Izveštaj o uspešnosti obavljenih zadataka"
+	},
+	toolTip: {
+		shared: true
+	},
+	data: [{
+		type: "splineArea",
+		name: "Broj angažovanih pasa po zadataku",
+
+		dataPoints: @Html.Raw(ViewBag.DataPoints2)
+	},
+	{
+		type: "splineArea",
+		name: "Broj pasa koji su uspešno obavili zadatak",
+
+		dataPoints: @Html.Raw(ViewBag.DataPoints1)
+	}]
+});
+chart.render();
+
+}  </script>
+<script>
+
+
+    $(function () {
+        GetZadaci();
+    });
+
+    $('#btnSearchZadaci').on('click', function (e) {
+        var filters = {
+            zadatak: $('#zadatak').val()
+        }
+
+
+        GetZadaci(filters);
+    });
+    function GetZadaci(filters) {
+        $.ajax({
+            url: '/Zadatak/Zadaci',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                $('#zadaci').html(result);
+            }).fail(function (xhr) {
+                console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+
+</script>

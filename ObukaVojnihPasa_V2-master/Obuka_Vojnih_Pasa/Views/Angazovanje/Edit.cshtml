@@ -1,0 +1,80 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Angazovanje
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+
+<div class="edit">
+    <div class="container">
+        <div class="row main">
+            <div class="main-login main-center">
+                <h5>Izmena podataka o angažovanju</h5>
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="PasId" />
+                    <input type="hidden" asp-for="ZadatakId" />
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Ime psa</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-dog fa" aria-hidden="true"></i></span>
+
+                                @Html.TextBoxFor(model => model.Pas.Ime, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Zadatak</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-map-marked-alt" aria-hidden="true"></i></span>
+                                @Html.TextBoxFor(model => model.Zadatak.NazivZadatka, new { @class = "form-control", @readonly = "readonly" })
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Datum unosa ocene</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-calendar-alt fa" aria-hidden="true"></i></span>
+                                <input  asp-for="DatumUnosaOcene" class="form-control"  readonly="readonly"/>
+                                <span asp-validation-for="DatumUnosaOcene" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Ocena</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="far fa-star" aria-hidden="true"></i></span>
+                                <input type="number" min="5" max="10" asp-for="Ocena" class="form-control" />
+                                <span asp-validation-for="Ocena" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group" style="padding-top:10px">
+
+                        <input type="submit" class="btn-submit" value=" Sačuvaj promene " />
+                        <input asp-action="Index" class="btn-submit" type="submit" value="Otkaži" style="margin-left: 20px; width: 140px" />
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

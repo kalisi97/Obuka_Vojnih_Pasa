@@ -1,0 +1,298 @@
+﻿@model Obuka_Vojnih_Pasa.Models.Domain.Pas
+
+@{
+    ViewData["Title"] = "Statistika";
+   
+}
+
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
+
+
+
+<section>
+    <div class="container">
+
+
+        <div class="row mbr-justify-content-center">
+            <div class="col-sm-6">
+                <div class="chart">
+                    <canvas id="property_types" class="pie"></canvas>
+                    <div id="pie_legend" class="py-3 text-left col-md-7 mx-auto"></div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="col-sm-12 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+
+                            <span class="mbr-iconfont fa-paw fa"></span>
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3">Pas: <span>@Model.Ime</span></h2>
+                            <p class="mbr-fonts-style text1 mbr-text"><label>@Model.Rasa, @Model.Obuka.Naziv</label></p>
+
+                            <label id="id" style="display:none">@ViewBag.PasId</label>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
+                <div class="col-sm-12 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+
+                            <a onclick="Angazovanja()" style="cursor: pointer"><span class="mbr-iconfont fa-history fa" id="infoIcon"></span></a>
+
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3">
+
+                                <span>Sva angažovanja psa</span>
+                            </h2>
+                            <p class="mbr-fonts-style text1 mbr-text">
+                                <label>Pokazatelj uspešnosti: @ViewBag.Uspeh</label>
+                            </p>
+                        </div>
+                    </div>
+                    <div id="info" style="display:none"></div>
+                </div>
+                <div class="col-sm-12 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+
+                            <a onclick="NeuspesnaAngazovanja()" style="cursor: pointer"><span class="mbr-iconfont fa-times-circle fa" id="infoFIcon"></span></a>
+
+
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3">
+
+                                <span>Neuspešno obavljeni zadaci</span>
+                            </h2>
+
+                        </div>
+
+                    </div>
+                    <div id="infoF" style="display:none"></div>
+                </div>
+                <div class="col-sm-12 mbr-col-md-10">
+                    <div class="wrap">
+                        <div class="ico-wrap">
+
+                            <a onclick="UspesnaAngazovanja()" style="cursor: pointer"><span class="mbr-iconfont fa-check-circle fa" id="infoSIcon"></span></a>
+
+                        </div>
+                        <div class="text-wrap vcenter">
+                            <h2 class="mbr-fonts-style mbr-bold mbr-section-title3"> <span>Uspešno obavljeni zadaci</span></h2>
+
+                        </div>
+
+                    </div>
+                    <div id="infoS" style="display:none"></div>
+                </div>
+
+            </div>
+
+
+            </div>
+         
+        </div>
+
+</section>
+
+<script src="~/js/scripts.js"></script>
+<script>
+
+	// global options variable
+	var options = {
+		responsive: true,
+		easing:'easeInExpo',
+		scaleBeginAtZero: true,
+        // you don't have to define this here, it exists inside the global defaults
+		legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+	}
+
+	
+		var ctxPTD = $("#property_types").get(0).getContext("2d");
+	
+		var dataPTD = [
+			{
+				label: "Ocena 10",
+				color: "#9B3192",
+				highlight: "#bd3cb2",
+				value:  @ViewBag.Desetke
+			},
+			{
+				label: "Ocena 9",
+				color: "#57167E",
+				highlight: "#771dad",
+				value:  @ViewBag.Devetke
+			},
+			{
+				label: "Ocena 8",
+				color: "#2B0B3F",
+				highlight: "#501475",
+				value:  @ViewBag.Osmice
+			},
+			{
+				label: "Ocena 7",
+				color: "#EA5F89",
+				highlight: "#fc729c",
+				value:  @ViewBag.Sedmice
+			},
+			{
+				label: "Ocena 6",
+				color: "#F7B7A3",
+				highlight: "#ffc7b5",
+				value:  @ViewBag.Sestice
+			},
+			{
+				label: "Ocena 5",
+				color: "#FFF1C9",
+				highlight: "#fff5d9",
+				value: @ViewBag.Petice
+			},
+			
+		]
+
+		// Property Type Distribution
+		var propertyTypes = new Chart(ctxPTD).Pie(dataPTD, options);
+			// pie chart legend
+			$("#pie_legend").html(propertyTypes.generateLegend());
+
+
+
+
+</script>
+<script>
+    $(function () {
+        Angazovanja();
+
+    });
+    $('#infoIcon').on('click', function (e) {
+        e.preventDefault();
+        var x = document.getElementById("info");
+        if (x.style.display === "none") {
+
+            x.style.display = "block";
+
+
+
+        } else {
+
+
+            x.style.display = "none";
+
+        }
+
+        var filters = {
+            pasId: document.getElementById('id').textContent,
+            akcija: 'Sva',
+             operacija: 'Statistika'
+
+        };
+
+        Angazovanja(filters);
+    });
+    function Angazovanja(filters) {
+        $.ajax({
+            url: '/Pas/AngazovanjaPsa',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                $('#info').html(result);
+
+            }).fail(function (xhr) {
+                console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+
+    $(function () {
+        NeuspesnaAngazovanja();
+    });
+    $('#infoFIcon').on('click', function (e) {
+        var x = document.getElementById("infoF");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+        var filters = {
+            pasId: document.getElementById('id').textContent,
+            akcija: 'Neuspesna',
+            operacija: 'Statistika'
+        };
+
+        NeuspesnaAngazovanja(filters);
+    });
+    function NeuspesnaAngazovanja(filters) {
+        $.ajax({
+            url: '/Pas/AngazovanjaPsa',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                $('#infoF').html(result);
+            }).fail(function (xhr) {
+                console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+    $(function () {
+        UspesnaAngazovanja();
+    });
+    $('#infoSIcon').on('click', function (e) {
+        var x = document.getElementById("infoS");
+        if (x.style.display === "none") {
+
+            x.style.display = "block";
+        } else {
+
+            x.style.display = "none";
+
+        }
+
+        var filters = {
+            pasId: document.getElementById('id').textContent,
+            akcija: 'Uspesna',
+            operacija: 'Statistika'
+
+        };
+
+        UspesnaAngazovanja(filters);
+    });
+    function UspesnaAngazovanja(filters) {
+        $.ajax({
+            url: '/Pas/AngazovanjaPsa',
+            type: 'POST',
+            cache: false,
+            async: true,
+            dataType: "html",
+            data: filters
+        })
+            .done(function (result) {
+                $('#infoS').html(result);
+            }).fail(function (xhr) {
+                console.log('error : ' + xhr.status + ' - ' + xhr.statusText + ' - ' + xhr.responseText);
+            });
+
+    }
+</script>

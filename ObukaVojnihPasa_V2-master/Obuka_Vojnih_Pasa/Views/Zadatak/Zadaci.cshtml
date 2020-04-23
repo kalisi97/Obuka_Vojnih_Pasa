@@ -1,0 +1,110 @@
+﻿@using Obuka_Vojnih_Pasa.Models.Domain;
+@model IEnumerable<Obuka_Vojnih_Pasa.Models.Domain.Zadatak>
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+    <link href="~/lib/sortable/Contents/bootstrap-sortable.css" rel="stylesheet" />
+
+@if (Model.Count() == 0)
+{
+    <h3>Nije pronađen nijedan zadatak po unetom kriterijumu pretrage.</h3>
+}
+else
+{
+    <div id="scroll">
+        <table class="table sortable">
+            <thead>
+                <tr>
+                    <th>
+
+                    </th>
+                    <th>
+                        Naziv zadatka
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Teren)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().Datum)
+                    </th>
+                    @if ((await authorizationService.AuthorizeAsync(User, "ZadatakPolicy")).Succeeded)
+                    {
+                        <th style="padding-left:50px">
+                            Akcije
+                        </th>
+                    }
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Angažovani psi
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        <i class="fas fa-rocket"></i>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NazivZadatka)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Teren)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Datum)
+                    </td>
+                    @if ((await authorizationService.AuthorizeAsync(User, "ZadatakPolicy")).Succeeded)
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id" target="_blank" title="Izmeni podatke"><i class=" fas fa-edit" style="color:snow; margin-left:30px"></i></a>
+
+                            <a asp-action="Delete" asp-route-id="@item.Id" target="_blank" title="Ukloni podatke"><i class=" fas fa-trash" style="color:snow; margin-left:30px"></i></a>
+                        </td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+
+
+                    @if (item.Status == "Završen")
+                    {
+                        <td>
+                            <a asp-action="Update" asp-route-id="@item.Id" asp-controller="Angazovanje" class="btn btn-sm btn-primary" title="Unesi angažovanja"> Oceni angažovanja</a>
+                        </td>
+                    }
+                    @if (item.Status == "Kreiran")
+                    {
+                        <td>
+                          <i class="fa fa-history"></i>  Zadatak je u toku!
+                        </td>
+                    }
+                    @if (item.Status == "Ocenjen")
+                    {
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id"  class="btn btn-sm btn-primary" target="_blank" title="Lista angažovanih pasa na zadatku"> Pogledaj sva angažovanja</a>
+
+                </td>
+                    }
+
+
+
+
+
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+}
+
+
+
+<script src="~/lib/sortable/Scripts/bootstrap-sortable.js"></script>
+<script src="~/lib/sortable/Scripts/moment.min.js"></script>
