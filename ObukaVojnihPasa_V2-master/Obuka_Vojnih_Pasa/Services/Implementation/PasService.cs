@@ -52,7 +52,8 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
             if (unitOfWork.PasRepository.GetAll().SingleOrDefault(p => p.BrojZdravstveneKnjizice == t.BrojZdravstveneKnjizice) != null) valid = false;
             if(unitOfWork.ObukaRepository.FindById(t.ObukaId) == null) valid = false;
             if (!RaseStore.rase.Contains(t.Rasa)) valid = false;
-            if (t.DatumRodjenja > DateTime.Now) valid = false;
+            if (t.DatumRodjenja == null) valid = false;
+          if(t.DatumRodjenja !=null && t.DatumRodjenja > DateTime.Now) valid = false;
             return valid;
         }
 

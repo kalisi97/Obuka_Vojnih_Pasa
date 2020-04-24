@@ -60,9 +60,9 @@ namespace Tests
             Pas pas = service.FindById(newPas.Id);
 
             Assert.Equal(newPas.Id, pas.Id);
-           
+
+            unitOfWork.Verify(x => x.PasRepository.Insert(It.Is<Pas>(p => p.Ime == "Lena")),Times.Once);
             unitOfWork.Verify(x => x.Save(),Times.Once);
-           // unitOfWork.Verify(x => x.PasRepository.Insert(It.Is<Pas>(p=>p.Ime=="Lena")));
         }
 
 
@@ -87,6 +87,7 @@ namespace Tests
             var service = new PasService(unitOfWork.Object);
         
            Assert.Throws<ArgumentOutOfRangeException>(() => service.Insert(newPas));
+            unitOfWork.Verify(x => x.PasRepository.Insert(It.IsAny<Pas>()), Times.Never);
             unitOfWork.Verify(s => s.Save(), Times.Never);
         }
 

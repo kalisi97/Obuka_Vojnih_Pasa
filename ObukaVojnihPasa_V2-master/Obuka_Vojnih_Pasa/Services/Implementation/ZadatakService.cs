@@ -46,9 +46,9 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
         private bool isValid(Zadatak t)
         {
             bool valid = true;
-            if (t.Angazovanja == null || t.Angazovanja.Count() == 0) valid = false;
-            if (t.Datum > DateTime.Now && t.Status != Enumerations.Status.Kreiran.ToString()) valid = false;
-            if (t.Datum <= DateTime.Now && t.Status == Enumerations.Status.Kreiran.ToString()) valid = false;
+            if (t.Angazovanja == null)  valid = false;
+                if(t.Angazovanja != null && t.Angazovanja.Count() == 0) valid = false;
+           //validacija za datum, teren
             return valid;
         }
 

@@ -168,7 +168,7 @@ namespace Tests
            
                 psi.Add(item);
 
-            });
+            }).Verifiable();
             mockPasRepository.Setup(m => m.Update(It.IsAny<Pas>())).Callback((Pas target) =>
             {
                 var original = psi.FirstOrDefault(
@@ -298,7 +298,7 @@ namespace Tests
                     GetMockAngazovanjeRepository().Object.Insert(a);
                 }
 
-            });
+            }).Verifiable();
             mockZadatakRepository.Setup(m => m.Update(It.IsAny<Zadatak>())).Callback((Zadatak target) =>
             {
                 var original = zadaci.FirstOrDefault(

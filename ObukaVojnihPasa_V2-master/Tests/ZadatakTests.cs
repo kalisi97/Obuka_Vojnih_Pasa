@@ -29,8 +29,8 @@ namespace Tests
             var newZadatak = new Zadatak()
             {
                 Id = 3,
-                Datum = new DateTime(2020, 04, 22),
-                Status = "Završen",
+                Datum = new DateTime(2020, 04, 29),
+                Status = Enumerations.Status.Kreiran.ToString(),
                 Teren = "Niš",
                 NazivZadatka = "Kontrola policijskog časa"
             };
@@ -71,7 +71,7 @@ namespace Tests
             Assert.Equal(newZadatak.Id, zadatak.Id);
             Assert.Equal(3, result.Count());
             unitOfWork.Verify(x => x.Save(), Times.Once);
-           // unitOfWork.Verify(x => x.ZadatakRepository.Insert(It.Is<Zadatak>(p=>p.Id==3)),Times.Once);
+            unitOfWork.Verify(x => x.ZadatakRepository.Insert(It.Is<Zadatak>(p=>p.Id==3)),Times.Once);
         }
 
         [Fact]
@@ -89,6 +89,8 @@ namespace Tests
 
             var service = new ZadatakService(unitOfWork.Object);
             Assert.Throws<ArgumentOutOfRangeException>(() => service.Insert(newZadatak));
+             unitOfWork.Verify(x => x.ZadatakRepository.Insert(It.IsAny<Zadatak>()),Times.Never);
+
             unitOfWork.Verify(s => s.Save(), Times.Never);
 
         }
