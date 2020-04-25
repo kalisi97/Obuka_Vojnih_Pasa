@@ -57,14 +57,41 @@ namespace Tests
 
             var mockObukaRepository = new Mock<IObukaRepository>();
             mockObukaRepository.Setup(repo => repo.GetAll()).Returns(obuke);
-            mockObukaRepository.Setup(repo => repo.FindById(It.IsAny<int>())).Returns((int i)=>obuke.Single(x=>x.Id==i));
+            mockObukaRepository.Setup(repo => repo.FindById(It.IsAny<int>())).Returns((int i)=>obuke.SingleOrDefault(x=>x.Id==i));
             mockObukaRepository.Setup(i => i.Insert(It.IsAny<Obuka>())).Callback((Obuka item) =>
             {
                
                 obuke.Add(item);
             });
+            mockObukaRepository.Setup(m => m.Update(It.IsAny<Obuka>())).Callback((Obuka target) =>
+            {
+                var original = obuke.FirstOrDefault(
+                    q => q.Id == target.Id);
+
+                if (original != null)
+                {
+                    original.Naziv = target.Naziv;
+                    original.Trajanje = target.Trajanje;
+                    original.Opis = target.Opis;
+
+                }
+
+            }).Verifiable();
+            mockObukaRepository.Setup(m => m.Delete(It.IsAny<int>())).Callback((int? i) =>
+            {
+
+                var original = obuke.FirstOrDefault(
+                    q => q.Id == i);
+
+                if (original != null)
+                {
+                    obuke.Remove(original);
+     
+                }
 
 
+
+            }).Verifiable();
             return mockObukaRepository;
         }
         public static Mock<IPasRepository> GetMockPasRepository()
@@ -185,7 +212,7 @@ namespace Tests
                     original.ObukaId = target.ObukaId;
                 
 
-            });
+            }).Verifiable();
             mockPasRepository.Setup(m => m.Delete(It.IsAny<int>())).Callback((int? i) =>
             {
 
@@ -195,11 +222,18 @@ namespace Tests
                 if (original != null)
                 {
                     psi.Remove(original);
+                    foreach (Angazovanje a in GetMockAngazovanjeRepository().Object.GetAll())
+                    {
+                        if (a.PasId == original.Id)
+                        {
+                            GetMockAngazovanjeRepository().Object.Delete(a);
+                        }
+                    }
                 }
                
 
          
-            });
+            }).Verifiable();
   
             return mockPasRepository;
         }
@@ -290,15 +324,16 @@ namespace Tests
                     return zadaci.SingleOrDefault(x => x.Id == i);
                 else return null;
             });
-            mockZadatakRepository.Setup(i => i.Insert(It.IsAny<Zadatak>())).Callback((Zadatak item) => {
+            mockZadatakRepository.Setup(i => i.Insert(It.IsAny<Zadatak>())).Callback((Zadatak item) =>
+            {
 
                 zadaci.Add(item);
-                foreach(Angazovanje a in item.Angazovanja)
+                foreach (Angazovanje a in item.Angazovanja)
                 {
                     GetMockAngazovanjeRepository().Object.Insert(a);
                 }
 
-            }).Verifiable();
+            });
             mockZadatakRepository.Setup(m => m.Update(It.IsAny<Zadatak>())).Callback((Zadatak target) =>
             {
                 var original = zadaci.FirstOrDefault(
@@ -312,7 +347,7 @@ namespace Tests
                 original.Angazovanja = target.Angazovanja;
 
 
-            });
+            }).Verifiable();
             mockZadatakRepository.Setup(m => m.Delete(It.IsAny<int>())).Callback((int? i) =>
             {
 
@@ -322,11 +357,18 @@ namespace Tests
                 if (original != null)
                 {
                    zadaci.Remove(original);
+                    foreach(Angazovanje a in GetMockAngazovanjeRepository().Object.GetAll())
+                    {
+                        if(a.ZadatakId == original.Id)
+                        {
+                            GetMockAngazovanjeRepository().Object.Delete(a);
+                        }
+                    }
                 }
 
 
 
-            });
+            }).Verifiable();
             return mockZadatakRepository;
 
         }
@@ -398,7 +440,7 @@ namespace Tests
             mockAngazovanjeRepository.Setup(i => i.Insert(It.IsAny<Angazovanje>())).Callback((Angazovanje item) => {
                 angazovanja.Add(item);
 
-            });
+            }).Verifiable();
             
             mockAngazovanjeRepository.Setup(m => m.Update(It.IsAny<Angazovanje>())).Callback((Angazovanje target) =>
             {
@@ -414,7 +456,7 @@ namespace Tests
                 original.DatumUnosaOcene = target.DatumUnosaOcene;
 
 
-            });
+            }).Verifiable();
             mockAngazovanjeRepository.Setup(m => m.Delete(It.IsAny<Angazovanje>())).Callback((Angazovanje item) =>
             {
 
@@ -428,7 +470,7 @@ namespace Tests
 
 
 
-            });
+            }).Verifiable();
             return mockAngazovanjeRepository;
         }
         public static Mock<IUnitOfWork> GetMockUnitOfWork()
@@ -437,6 +479,7 @@ namespace Tests
             unitOfWork.Setup(x => x.ObukaRepository).Returns(GetMockObukaRepository().Object);
             unitOfWork.Setup(x => x.PasRepository).Returns(GetMockPasRepository().Object);
             unitOfWork.Setup(x => x.ZadatakRepository).Returns(GetMockZadatakRepository().Object);
+            unitOfWork.Setup(x => x.AngazovanjeRepository).Returns(GetMockAngazovanjeRepository().Object);
             unitOfWork.Setup(x => x.Save()).Verifiable();
             return unitOfWork;
         }

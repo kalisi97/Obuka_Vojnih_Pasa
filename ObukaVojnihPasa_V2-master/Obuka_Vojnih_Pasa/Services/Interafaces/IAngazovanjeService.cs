@@ -11,6 +11,6 @@ namespace Obuka_Vojnih_Pasa.Services.Interafaces
         public void Update(Angazovanje angazovanje);
         public Angazovanje GetById(int PasId, int ZadatakId);
         public void Delete(Angazovanje ang);
-        public void InsertRange(List<Angazovanje> angazovanja);
+        public void Insert(Angazovanje a);
     }
 }

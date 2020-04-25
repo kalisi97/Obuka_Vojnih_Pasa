@@ -13,10 +13,10 @@
             <div class="main-login main-center">
                 <h5>Izmena podataka o angažovanju</h5>
                 <form asp-action="Edit">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="PasId" />
                     <input type="hidden" asp-for="ZadatakId" />
-
+                    <input type="hidden" asp-for="Pas.BrojZdravstveneKnjizice" />
+                    <input type="hidden" asp-for="Zadatak.Teren" />
 
                     <div class="form-group">
                         <label class="cols-sm-2 control-label">Ime psa</label>
@@ -47,7 +47,7 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-calendar-alt fa" aria-hidden="true"></i></span>
-                                <input  asp-for="DatumUnosaOcene" class="form-control"  readonly="readonly"/>
+                                <input asp-for="DatumUnosaOcene" class="form-control" readonly="readonly" />
                                 <span asp-validation-for="DatumUnosaOcene" class="text-danger"></span>
                             </div>
                         </div>

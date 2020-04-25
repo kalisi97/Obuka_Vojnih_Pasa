@@ -26,11 +26,7 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
             return unitOfWork.InstruktorRepository.GetAll();
         }
 
-        public void Insert(Instruktor t)
-        {
-            unitOfWork.InstruktorRepository.Insert(t);
-            unitOfWork.Save();
-        }
+       
 
         public void Update(Instruktor instruktorIzBaze)
         {

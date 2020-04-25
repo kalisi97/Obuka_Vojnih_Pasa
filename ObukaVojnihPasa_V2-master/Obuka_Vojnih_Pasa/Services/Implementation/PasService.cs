@@ -20,13 +20,15 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
 
         public void Delete(int pasIzBazeId)
         {
+            Pas pas = unitOfWork.PasRepository.FindById(pasIzBazeId);
+            if (pas == null) throw new Exception();
             unitOfWork.PasRepository.Delete(pasIzBazeId);
             unitOfWork.Save();
         }
 
         public Pas FindById(int? id)
         {
-            
+                
                 return unitOfWork.PasRepository.FindById(id);
             
           
@@ -39,7 +41,7 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
 
         public void Insert(Pas t)
         {
-            if(isValid(t)==false) throw new ArgumentOutOfRangeException("Nevalidan unos!");
+            if(isValid(t)==false || unitOfWork.PasRepository.GetAll().SingleOrDefault(p => p.BrojZdravstveneKnjizice == t.BrojZdravstveneKnjizice) != null) throw new ArgumentOutOfRangeException("Nevalidan unos!");
             unitOfWork.PasRepository.Insert(t);
             unitOfWork.Save();
         }
@@ -47,9 +49,12 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
         private bool isValid(Pas t)
         {
             bool valid = true;
+            if (t == null) return false;
+            if (string.IsNullOrEmpty(t.BrojZdravstveneKnjizice) ||
+                string.IsNullOrEmpty(t.Pol) || string.IsNullOrEmpty(t.Ime)
+                || string.IsNullOrEmpty(t.Rasa) || t.Obuka == null) valid = false;
             if (t.Pol == "Muški" || t.Pol == "Ženski") valid = true;
             else valid = false;
-            if (unitOfWork.PasRepository.GetAll().SingleOrDefault(p => p.BrojZdravstveneKnjizice == t.BrojZdravstveneKnjizice) != null) valid = false;
             if(unitOfWork.ObukaRepository.FindById(t.ObukaId) == null) valid = false;
             if (!RaseStore.rase.Contains(t.Rasa)) valid = false;
             if (t.DatumRodjenja == null) valid = false;
@@ -69,6 +74,8 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
 
         public void Update(Pas pas)
         {
+            if (isValid(pas) == false) throw new ArgumentOutOfRangeException("Nevalidan unos!");
+
             unitOfWork.PasRepository.Update(pas);
             unitOfWork.Save();
         }

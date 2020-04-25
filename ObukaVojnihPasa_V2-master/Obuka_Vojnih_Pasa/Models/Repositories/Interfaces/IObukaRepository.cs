@@ -14,5 +14,6 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Interfaces
         public void Delete(int ObukaId);
 
         public Obuka FindById(int? id);
+        void Insert(Obuka t);
     }
 }

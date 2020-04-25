@@ -66,7 +66,7 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Implementation
             }
         }
 
-        public override void Insert(Zadatak t)
+        public void Insert(Zadatak t)
         {
             try
             {

@@ -1,78 +1,103 @@
 ﻿@model Obuka_Vojnih_Pasa.ViewModels.ZadatakViewModel.UnosZadatkaViewModel
-
+@using Obuka_Vojnih_Pasa.Models.Domain
+@{
+    List<Zadatak> lista = new List<Zadatak>();
+    lista = ViewBag.Zadaci;
+}
 @{
     ViewData["Title"] = "Create";
 }
 
     <body>
+        <table id="lista" style="display:none">
 
+            <tbody>
+                @foreach (Zadatak z in lista)
+                {
+                    <tr>
+                        <td>@z.NazivZadatka</td>
+                        <td>@z.Datum.ToString("yyyy-MM-dd")</td>
+                        <td>@z.Teren</td>
+                    </tr>
+                }
 
+            </tbody>
+        </table>
+        <h3 id="confirm" style="padding-top: 30px; color: white; font-size: 1.5rem;">
+            <img src="https://img.icons8.com/doodle/48/000000/checklist--v1.png" />   Unesite podatke o zadatku
+
+        </h3>
         <div class="edit" style="background:none">
             <div class="container">
                 <div class="row main">
+                    <form method="post" style="padding-left:60px; width:1000px">
+
+                        <table id="multipleCategoryTbl2" class="table">
 
 
-                    <table id="multipleCategoryTbl2" class="table" style="margin-top:50px">
+                            <thead class="multipleCategoryTbl-header">
+                                <tr>
 
+                                    <td>
 
-                        <thead class="multipleCategoryTbl-header">
-                            <tr>
-                                <td>
-
-                                    <div class="form-group">
-                                        <label class="cols-sm-2 control-label">Naziv zadatka</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-rocket fa" aria-hidden="true"></i></span>
-                                                <input asp-for="NazivZadatka" class="form-control" id="txtZadatak" />
+                                        <div class="form-group">
+                                            <label class="cols-sm-2 control-label">Naziv zadatka</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-rocket fa" aria-hidden="true"></i></span>
+                                                    <input asp-for="NazivZadatka" class="form-control" id="txtZadatak" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                                <td style="width:300px">
-                                    <div class="form-group">
-                                        <label class="cols-sm-2 control-label">Datum</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-calendar-alt fa" aria-hidden="true"></i></span>
-                                                <input asp-for="Datum" class="form-control" id="txtDatum" />
+                                    </td>
+                                    <td style="width:200px">
+                                        <div class="form-group">
+                                            <label class="cols-sm-2 control-label">Datum</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-calendar-alt fa" aria-hidden="true"></i></span>
+                                                    <input type="date" asp-for="Datum" class="form-control" id="txtDatum" />
+                                                </div>
                                                 <span asp-validation-for="Datum" class="text-danger"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </td>
-
-
-                                <td>
-                                    <div class="form-group">
-                                        <label class="cols-sm-2 control-label">Naziv terena</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-map-marked-alt" aria-hidden="true"></i></span>
-
-                                                <input asp-for="Teren" class="form-control" id="txtTeren" />
-                                                <span asp-validation-for="Teren" class="text-danger"></span>
-
 
                                             </div>
                                         </div>
-                                    </div>
-
-                                </td>
+                                    </td>
 
 
-                        </thead>
+                                    <td>
+                                        <div class="form-group">
+                                            <label class="cols-sm-2 control-label">Naziv terena</label>
+                                            <div class="cols-sm-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-map-marked-alt" aria-hidden="true"></i></span>
+
+                                                    <input asp-for="Teren" class="form-control" id="txtTeren" />
+                                                    <span asp-validation-for="Teren" class="text-danger"></span>
 
 
-                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+                            </thead>
 
 
+                        </table>
 
 
+                    </form>
+                    </div>
+                <h3 id="confirm" style="color: white; font-size: 1.5rem;">
+                    <img src="https://img.icons8.com/bubbles/50/000000/dog-paw-print.png" />  Odaberite pse koje želite da angažujete na ovom zadatku
 
+                </h3>
                     <div class="table-borderless" id="tbl">
 
-                        <table id="multipleCategoryTbl" class="table" style="margin-top:50px">
+                        <table id="multipleCategoryTbl" class="table" style="margin-top:30px">
 
 
                             <thead class="multipleCategoryTbl-header">
@@ -96,6 +121,7 @@
                                         </div>
 
                                     </td>
+                                </tr>
                             </thead>
 
                             <tbody class="multipleCategoryTbl-body">
@@ -106,7 +132,7 @@
                     </div>
 
 
-                </div>
+              
             </div>
         </div>
 
@@ -123,7 +149,7 @@
                 var txtDatum = $("#txtDatum");
                 var txtTeren = $("#txtTeren");
                 var tBody = $("#multipleCategoryTbl > TBODY")[0];
-              
+
                 $("#multipleCategoryTbl TBODY TR").each(function () {
                     var row = $(this);
                     var txtTrenutni = row.find("TD").eq(1).html();
@@ -131,6 +157,7 @@
 
                     if (txtPas.val() == txtTrenutni) {
                         validate = false;
+
                     }
 
 
@@ -147,19 +174,19 @@
                 }
                 else {
 
-                var row = tBody.insertRow(-1);
-                var cell = $(row.insertCell(-1));
-                cell.html(txtPas.text());
-                var cell = $(row.insertCell(-1));
-                cell.html(txtPas.val()).css("display", "none");
-                cell = $(row.insertCell(-1));
-                var btnRemove = $("<input />");
-                btnRemove.attr("type", "button").css("background", "linear-gradient(to right, #6dd5ed, #2193b0)").css("border-radius", "100px").css("color", "white").css("width", "80px").css("border-color", "silver");
-                btnRemove.attr("onclick", "Remove(this);");
-                btnRemove.val("Obriši");
-                cell.append(btnRemove);
+                    var row = tBody.insertRow(-1);
+                    var cell = $(row.insertCell(-1));
+                    cell.html(txtPas.text());
+                    var cell = $(row.insertCell(-1));
+                    cell.html(txtPas.val()).css("display", "none");
+                    cell = $(row.insertCell(-1));
+                    var btnRemove = $("<input />");
+                    btnRemove.attr("type", "button").css("background", "linear-gradient(to right, #6dd5ed, #2193b0)").css("border-radius", "100px").css("color", "white").css("width", "80px").css("border-color", "silver");
+                    btnRemove.attr("onclick", "Remove(this);");
+                    btnRemove.val("Obriši");
+                    cell.append(btnRemove);
 
-            }
+                }
 
 
             });
@@ -190,26 +217,53 @@
 
 
             $("body").on("click", "#btnSave", function () {
-            
+
                 var i = 0;
+                var message = "";
+
                 var validate = true;
                 if (txtTeren.value === "") validate = false;
                 if (txtZadatak.value === "") validate = false;
                 if (txtDatum.value === "") validate = false;
+                $("#lista TBODY TR").each(function () {
+                    var row = $(this);
+                    var zadatak = row.find("TD").eq(0).html();
+                    var datum = row.find("TD").eq(1).html();
+                    var teren = row.find("TD").eq(2).html();
+                    if (txtZadatak.value == zadatak) {
+                        if (txtDatum.value == datum) {
+                            if (txtTeren.value == teren)
+                                validate = false;
+                            message += "Zadatak na ovom terenu ovog datum je već unet!";
+                        }
+                    }
+                });
                 $("#multipleCategoryTbl TBODY TR").each(function () {
                     i++;
                 });
-                if (i === 0) validate = false;
+                if (i === 0) {
+                    message += '\n' + "Nevalidan unos! Proverite da li ste ispravno uneli sve podatke o zadatku i uneli angažovane pse!";
+                    validate = false;
+                }
                 if (!validate) {
-                   
+
                     Swal.fire({
 
                         icon: 'error',
-                        title: "Nevalidan unos! Proverite da li ste popunili sve podatke o zadatku i uneli angažovane pse!"
+                        title: message
 
+
+                    }).then(function () {
+                        $("#multipleCategoryTbl TBODY TR").each(function () {
+                            $(this).remove();
+
+                        });
+                        txtTeren.value = "";
+                        txtZadatak.value = "";
+                        txtDatum.value = "";
 
                     });
-                  
+
                 } else {
 
 

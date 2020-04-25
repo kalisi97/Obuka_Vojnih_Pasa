@@ -18,7 +18,7 @@ namespace Obuka_Vojnih_Pasa.Models.Domain
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy.}", NullDisplayText = "Datum još uvek nije unet")]
         public DateTime? DatumUnosaOcene { get; set; }
-       [Range(5,10)]
+        [Range(5,10)]
         [DisplayFormat(NullDisplayText = "Ocena još uvek nije uneta!")]
         public int? Ocena { get; set; }
     }

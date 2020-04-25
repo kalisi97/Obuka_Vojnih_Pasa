@@ -18,9 +18,6 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories
             return context.Set<T>();
         }
 
-        public virtual void Insert(T t)
-        {
-            context.Add(t);
-        }
+       
     }
 }

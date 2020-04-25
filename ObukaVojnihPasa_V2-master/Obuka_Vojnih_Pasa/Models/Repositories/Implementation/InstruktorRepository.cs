@@ -46,17 +46,7 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Implementation
             }
         }
 
-        public override void Insert(Instruktor t)
-        {
-            try
-            {
-                context.Add(t);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"Greška prilikom unosa instruktora! Greška: {ex.Message}");
-            }
-        }
+     
 
         public void Update(Instruktor instruktorIzBaze)
         {

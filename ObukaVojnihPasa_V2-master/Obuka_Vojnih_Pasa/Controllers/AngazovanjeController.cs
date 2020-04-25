@@ -220,7 +220,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
      
         [HttpPost, ActionName("Edit")]
-        [ValidateAntiForgeryToken]
+     
         public IActionResult EditAngazovanje(Angazovanje angazovanje)
         {
             try
@@ -236,6 +236,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
                     service.Update(angazovanjeIzBaze);
                     return RedirectToAction("Index", new { message = $"Izmene o angažovanju psa: {angazovanje.Pas.Ime} za zadatak:  {angazovanje.Zadatak.NazivZadatka}  uspešno sačuvane" });
                 }
+              
 
 
                 return View(angazovanje);

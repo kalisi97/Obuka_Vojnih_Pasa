@@ -20,10 +20,9 @@
                         <div class="cols-sm-10">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-notes-medical fa" aria-hidden="true"></i></span>
-                                <input asp-for="BrojZdravstveneKnjizice" class="form-control" />
-
+                                @Html.TextBoxFor(model => model.BrojZdravstveneKnjizice, new { @class = "form-control", @readonly = "readonly" })
                             </div>
-                            <span asp-validation-for="BrojZdravstveneKnjizice" class="zadatak_invalid"></span>
+                           
 
                         </div>
                     </div>

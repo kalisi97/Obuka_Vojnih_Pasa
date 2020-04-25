@@ -65,7 +65,7 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Implementation
             }
         }
 
-        public override void Insert(Pas t)
+        public  void Insert(Pas t)
         {
             try
             {

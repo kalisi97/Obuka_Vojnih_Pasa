@@ -12,7 +12,7 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Interfaces
         public void Update(Angazovanje a);
 
         public Angazovanje GetById(int PasId, int ZadatakId);
-        void Delete(Angazovanje angazovanje);
-        public void InsertRange(List<Angazovanje> angazovanja);
+       public void Delete(Angazovanje angazovanje);
+      public  void Insert(Angazovanje a);
     }
 }

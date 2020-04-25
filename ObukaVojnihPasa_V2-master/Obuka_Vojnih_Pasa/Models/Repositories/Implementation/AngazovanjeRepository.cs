@@ -55,25 +55,18 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Implementation
             }
         }
 
-        public void InsertRange(List<Angazovanje> t)
+        public void Insert(Angazovanje t)
         {
             try
             {
-                context.AddRange();
-               
                 
+                context.Add(t);
             }
             catch (Exception ex)
             {
 
                 throw new Exception($"Greška prilikom unosa angažovanja! Greška: {ex.Message}");
             }
-        }
-
-        public void Insert(Angazovanje t)
-        {
-           
-            context.Add(t);
         }
 
         public void Save()

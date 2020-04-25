@@ -35,7 +35,7 @@ else
                     <th>
                         Status
                     </th>
-                    <th>
+                    <th style="padding-left:30px">
                         Angažovani psi
                     </th>
 
@@ -61,9 +61,9 @@ else
                     @if ((await authorizationService.AuthorizeAsync(User, "ZadatakPolicy")).Succeeded)
                     {
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id" target="_blank" title="Izmeni podatke"><i class=" fas fa-edit" style="color:snow; margin-left:30px"></i></a>
+                            <a asp-action="Edit" asp-route-id="@item.Id"  title="Izmeni podatke"><i class=" fas fa-edit" style="color:snow; margin-left:30px"></i></a>
 
-                            <a asp-action="Delete" asp-route-id="@item.Id" target="_blank" title="Ukloni podatke"><i class=" fas fa-trash" style="color:snow; margin-left:30px"></i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"  title="Ukloni podatke"><i class=" fas fa-trash" style="color:snow; margin-left:30px"></i></a>
                         </td>
                     }
 
@@ -87,7 +87,7 @@ else
                     @if (item.Status == "Ocenjen")
                     {
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id"  class="btn btn-sm btn-primary" target="_blank" title="Lista angažovanih pasa na zadatku"> Pogledaj sva angažovanja</a>
+                    <a asp-action="Details" asp-route-id="@item.Id"  class="btn btn-sm btn-primary" title="Lista angažovanih pasa na zadatku"> Pogledaj angažovanja</a>
 
                 </td>
                     }

@@ -14,6 +14,7 @@ using Obuka_Vojnih_Pasa.Services.Interafaces;
 using Obuka_Vojnih_Pasa.Models.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Obuka_Vojnih_Pasa.ViewModels;
+using Obuka_Vojnih_Pasa.ViewModels.PasViewModel;
 
 namespace Obuka_Vojnih_Pasa.Controllers
 {
@@ -100,6 +101,8 @@ namespace Obuka_Vojnih_Pasa.Controllers
             }
         }
         [HttpGet]
+ 
+      
         public IActionResult Create()
         {
             ObukeDropDownList();
@@ -110,7 +113,8 @@ namespace Obuka_Vojnih_Pasa.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([Bind("Id", "BrojZdravstveneKnjizice", "Ime", "DatumRodjenja", "Rasa", "Pol", "ObukaId")] Pas pas)
+     
+        public IActionResult Create([Bind("Id", "BrojZdravstveneKnjizice", "Ime", "DatumRodjenja", "Rasa", "Pol", "ObukaId")] InsertPasViewModel pas)
         {
             try
             {
@@ -118,8 +122,20 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
                 if (ModelState.IsValid)
                 {
-
-                    service.Insert(pas);
+                    Pas pasToInsert = new Pas()
+                    {
+                        BrojZdravstveneKnjizice = pas.BrojZdravstveneKnjizice,
+                        DatumRodjenja = pas.DatumRodjenja,
+                        Ime = pas.Ime,
+                        Id = pas.Id,
+                        Obuka = pas.Obuka,
+                        Rasa = pas.Rasa,
+                        ObukaId = pas.ObukaId,
+                        Angazovanja = pas.Angazovanja,
+                        Pol = pas.Pol
+                        
+                    };
+                    service.Insert(pasToInsert);
                     return RedirectToAction("Search", new { message = $"Uspešno sačuvani podaci o psu: {pas.Ime}" });
                 }
 
@@ -134,7 +150,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
             }
 
         }
-
+      
         public IActionResult Edit(int? id)
         {
             try
@@ -157,7 +173,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
         }
 
 
-
+ 
         [HttpPost]
         public IActionResult Edit(Pas pas)
         {

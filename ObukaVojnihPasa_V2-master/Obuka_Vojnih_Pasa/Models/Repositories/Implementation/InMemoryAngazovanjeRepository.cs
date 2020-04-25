@@ -15,11 +15,7 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Implementation
             return angazovanja;
         }
 
-        public void InsertRange(List<Angazovanje> t)
-        {
-            angazovanja.AddRange(t);
-        }
-
+       
         public void Save()
         {
 
@@ -42,10 +38,9 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Implementation
             angazovanja.Remove(angazovanje);
         }
 
-        public void Insert(Angazovanje t)
+        public void Insert(Angazovanje a)
         {
-            
-            angazovanja.Add(t);
+            angazovanja.Add(a);
         }
     }
     }

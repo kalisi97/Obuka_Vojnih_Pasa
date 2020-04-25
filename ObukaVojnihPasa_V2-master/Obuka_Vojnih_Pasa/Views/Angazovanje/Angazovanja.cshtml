@@ -30,7 +30,7 @@ else
                     <th>
                         Naziv zadatka
                     </th>
-                    <th>
+                    <th style="width:200px">
                         Datum realizacije zadatka
                     </th>
                     <th>
@@ -51,39 +51,44 @@ else
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            <i class="fas fa-paw"></i>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Pas.Ime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Zadatak.Datum)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Ocena)
-                        </td>
-                        @{
-                            var parms = new Dictionary<string, string>
-                                                                            {
+                <tr>
+                    <td>
+                        <a asp-action="Statistika" asp-controller="Pas" asp-route-id="@item.PasId">   <i class="fas fa-paw" style="color:snow"></i> </a>
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pas.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.Datum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ocena)
+                    </td>
+
+                    @{
+                        var parms = new Dictionary<string, string>
+                                                                                {
                 { "PasId",item.PasId.ToString() },
                 { "ZadatakId",item.ZadatakId.ToString() }
                         };
-                        }
+                    }
+                    @if (item.Zadatak.Status.Equals("Ocenjen"))
+                    {
                         @if ((instruktor != null && item.Pas.ObukaId == instruktor.ObukaId) || User.IsInRole("Admin"))
                         {
                             <td>
                                 <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms" target="_blank" title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
+
                                 @if ((await authorizationService.AuthorizeAsync(User, "AngazovanjePolicy")).Succeeded)
                                 {
-                                    <a asp-action="Delete" asp-controller="Angazovanje" asp-all-route-data="parms" target="_blank" title="Obriši podatke o angažovanju"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
+                                    <a asp-action="Delete" asp-controller="Angazovanje" asp-all-route-data="parms" title="Obriši podatke o angažovanju"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
                                 }
                             </td>
 
@@ -94,8 +99,12 @@ else
                                 <i class="fas fa-user-alt-slash" style="color:snow;margin-left:20px" title="Nemate dozvolu za pristup ovoj opciji"></i>
                             </td>
                         }
-
-                    </tr>
+                    }
+                    else
+                    {
+                        <td><i class="fa fa-history"> Ocenjivanje u toku...</i></td>
+                    }
+                </tr>
                 }
 
             </tbody>

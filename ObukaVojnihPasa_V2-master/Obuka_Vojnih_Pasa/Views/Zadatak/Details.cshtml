@@ -28,7 +28,7 @@ else
 
 
     <h3 id="confirm" style="padding-top: 30px; color: white; font-size: 1.5rem;">
-        <img src="https://img.icons8.com/doodle/48/000000/checklist--v1.png" />   Lista svih pasa angazovanih na izabranom zadatku
+        <img src="https://img.icons8.com/doodle/48/000000/checklist--v1.png" />   Lista svih pasa angažovanih na izabranom zadatku
 
     </h3>
 
@@ -95,10 +95,13 @@ else
 
                         @if ((instruktor != null && item.Pas.ObukaId == instruktor.ObukaId) || User.IsInRole("Admin"))
                         {
-                            <td>
-                                <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms" target="_blank" title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
-
-                            </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms" title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
+                        @if ((await authorizationService.AuthorizeAsync(User, "AngazovanjePolicy")).Succeeded)
+                        {
+                            <a asp-action="Delete" asp-controller="Angazovanje" asp-all-route-data="parms" title="Obriši podatke o angažovanju"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
+                        }
+                    </td>
 
                         }
                         else

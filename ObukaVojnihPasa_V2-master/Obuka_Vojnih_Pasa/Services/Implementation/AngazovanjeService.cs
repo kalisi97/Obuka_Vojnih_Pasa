@@ -29,34 +29,56 @@ namespace Obuka_Vojnih_Pasa.Services.Implementation
 
      
 
-        public void InsertRange(List<Angazovanje> t)
-        {
-            unitOfWork.AngazovanjeRepository.InsertRange(t);
-            unitOfWork.Save();
-        }
+    
 
         public void Update(Angazovanje angazovanje)
         {
+            if (isValid(angazovanje) == false) throw new ArgumentOutOfRangeException();
             unitOfWork.AngazovanjeRepository.Update(angazovanje);
             unitOfWork.Save();
+        }
+
+        private bool isValid(Angazovanje angazovanje)
+        {
+            bool valid = true;
+            if (angazovanje == null) return false;
+            if (angazovanje.Ocena == null || angazovanje.DatumUnosaOcene == null ||
+                angazovanje.Zadatak == null || angazovanje.Pas == null) return false;
+            if (angazovanje.DatumUnosaOcene < angazovanje.Zadatak.Datum) valid = false;
+            if (angazovanje.Ocena < 5 || angazovanje.Ocena > 10) valid = false;
+            return valid;
         }
 
         public Angazovanje GetById(int PasId, int ZadatakId)
         {
            Angazovanje a = unitOfWork.AngazovanjeRepository.GetById(PasId, ZadatakId);
+   
             return a;
         }
 
         public void Delete(Angazovanje angazovanje)
         {
+            if (angazovanje == null) throw new Exception();
+            Angazovanje a = unitOfWork.AngazovanjeRepository.GetById(angazovanje.PasId, angazovanje.ZadatakId);
+            if (a == null) throw new Exception();
             unitOfWork.AngazovanjeRepository.Delete(angazovanje);
             unitOfWork.Save();
         }
 
-        public void Insert(Angazovanje t)
+        public void Insert(Angazovanje a)
         {
-            unitOfWork.AngazovanjeRepository.Insert(t);
+            if (isValidUnos(a) == false) throw new ArgumentOutOfRangeException();
+            unitOfWork.AngazovanjeRepository.Insert(a);
             unitOfWork.Save();
+        }
+
+        private bool isValidUnos(Angazovanje angazovanje)
+        {
+            bool valid = true;
+            if (angazovanje == null) return false;
+            if (angazovanje.Ocena != null || angazovanje.DatumUnosaOcene != null ||
+                angazovanje.Zadatak == null || angazovanje.Pas == null) valid = false;
+            return valid;
         }
     }
 }

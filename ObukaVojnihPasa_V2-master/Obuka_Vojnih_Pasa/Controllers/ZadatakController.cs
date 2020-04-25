@@ -59,7 +59,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
                     {
                         if (a.Ocena != null) i++;
                     }
-                    if (i == z.Angazovanja.Count())
+                    if (i == z.Angazovanja.Count() && z.Status != "Ocenjen")
                     {
                         Zadatak zadatakIzBaze = service.FindById(z.Id);
                         if (zadatakIzBaze == null) return RedirectToAction("PageNotFound", "Home", new { message = "Zadatak čije podatke zahtevate ne postoji!" });
@@ -171,6 +171,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
         public IActionResult Create()
         {
             ViewBag.Psi = servicePas.GetAll().ToList();
+            ViewBag.Zadaci = service.GetAll().ToList();
             PasDropDownList();
             return View();
         }
@@ -276,13 +277,13 @@ namespace Obuka_Vojnih_Pasa.Controllers
                 {
                     var zadatakIzBaze = service.FindById(zadatak.Id);
                     if (zadatakIzBaze == null) return RedirectToAction("PageNotFound", "Home", new { message = "Zadatak čije podatke zahtevate ne postoji!" });
-                    zadatakIzBaze.Angazovanja = zadatak.Angazovanja;
+                  //  zadatakIzBaze.Angazovanja = zadatak.Angazovanja;
                     zadatakIzBaze.Datum = zadatak.Datum;
                     zadatakIzBaze.NazivZadatka = zadatak.NazivZadatka;
                     zadatakIzBaze.Teren = zadatak.Teren;
                     zadatakIzBaze.Status = zadatak.Status;
                     service.Update(zadatakIzBaze);
-                    return RedirectToAction("Search", new { message = $"Izmene o psu: {zadatakIzBaze.NazivZadatka} uspešno sačuvane" });
+                    return RedirectToAction("Index", new { message = $"Izmene o zadatku: {zadatakIzBaze.NazivZadatka} uspešno sačuvane" });
                 }
 
                 return View(zadatak);
@@ -339,7 +340,22 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
         }
 
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public IActionResult NevalidanUnosDatuma([FromQuery]DateTime Datum)
+        {
+            bool valid = true;
+            if (Datum <= DateTime.Now) valid = false;
 
+            if (valid == true)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($" Morate uneti datum u budućnosti!");
+            }
+        }
     }
     }
 

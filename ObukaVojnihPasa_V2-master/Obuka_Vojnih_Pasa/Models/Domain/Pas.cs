@@ -14,7 +14,7 @@ namespace Obuka_Vojnih_Pasa.Models.Domain
      
         [DisplayName("Zdravstvena knjizica")]
         [Required(ErrorMessage = "Ovo polje je obavezno!")]
-        [Remote(action: "NevalidanBrojKnjizice", controller: "Pas")]
+
         public string BrojZdravstveneKnjizice { get; set; }
         [Required(ErrorMessage = "Ovo polje je obavezno!")]
         public string Ime { get; set; }

@@ -14,6 +14,6 @@ namespace Obuka_Vojnih_Pasa.Services.Interafaces
         public List<string> VratiListuNazivaZadataka();
         public List<int> VratiBrojAngazovanjaPoZadatku();
        public List<int> VratiBrojPozitivihOcenaPoZadatku();
-
+       public void Insert(Zadatak zadatak);
     }
 }

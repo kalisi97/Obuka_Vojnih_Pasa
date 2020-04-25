@@ -19,5 +19,6 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Interfaces
         public List<Pas> TriNajuspesnijaPsa();
       public  int VratiBrojOcena(Pas pasIzBaze, int v);
         List<Angazovanje> vratiAngazovanjaPoKriterijumu(string akcija, int? pasId);
+        void Insert(Pas t);
     }
 }

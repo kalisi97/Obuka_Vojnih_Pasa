@@ -1,22 +1,34 @@
 ﻿@model Obuka_Vojnih_Pasa.Models.Domain.Angazovanje
 @using Obuka_Vojnih_Pasa.Models.Domain
 
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+@inject UserManager<ApplicationUser> userManager
 
+
+@{Instruktor instruktor = null; }
+@{
+    @if (!User.IsInRole("Admin"))
+        instruktor = await userManager.FindByIdAsync(userManager.GetUserId(User)) as Instruktor;
+}
 
 @{
     ViewData["Title"] = "Create";
 }
 
-@{ 
+@{
     List<Angazovanje> ocenjenaAngazovanja = new List<Angazovanje>();
 }
-@{ 
+@{
     @if (ViewBag.Ocenjena != null) ocenjenaAngazovanja = ViewBag.Ocenjena;
 }
 
-    <body>
-@if (ocenjenaAngazovanja.Count() != 0)
-{
+<body>
+    @if (ocenjenaAngazovanja.Count() != 0)
+    {<h3 id="confirm" style="padding-top: 30px; color: white; font-size: 1.5rem;">
+            <img src="https://img.icons8.com/doodle/48/000000/checklist--v1.png" />  Lista ocenjenih angažovanja na ovom zadatku
+
+        </h3>
         <div class="table-borderless" id="tbl">
 
             <table id="multipleCategoryTbl" class="table" style="margin-top:50px">
@@ -42,11 +54,13 @@
                         <th>
                             Ocena
                         </th>
+                        <th>
+                            Akcije
+                        </th>
 
-                     
                     </tr>
-                   
-                    </thead>
+
+                </thead>
                 <tbody>
 
                     @foreach (Angazovanje item in ocenjenaAngazovanja)
@@ -70,84 +84,108 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Ocena)
                             </td>
-                            </tr>
+                            @{
+                                var parms = new Dictionary<string, string>
+                                                                                                    {
+                { "PasId",item.PasId.ToString() },
+                { "ZadatakId",item.ZadatakId.ToString() }
+                        };
+                            }
+                            @if ((instruktor != null && item.Pas.ObukaId == instruktor.ObukaId) || User.IsInRole("Admin"))
+                            {
+                                <td>
+                                    <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms"  title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
+                                    @if ((await authorizationService.AuthorizeAsync(User, "AngazovanjePolicy")).Succeeded)
+                                    {
+                                        <a asp-action="Delete" asp-controller="Angazovanje" asp-all-route-data="parms"  title="Obriši podatke o angažovanju"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
+                                    }
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td>
+                                    <i class="fas fa-user-alt-slash" style="color:snow;margin-left:20px" title="Nemate dozvolu za pristup ovoj opciji"></i>
+                                </td>
+                            }
+                        </tr>
                     }
 
                 </tbody>
-                    </table>
+            </table>
 
-             </div>
-}
-                    <div class="table-borderless" id="tbl">
+        </div>
+    }
+    <div class="table-borderless" id="tbl">
 
-                        <table id="multipleCategoryTbl" class="table" style="margin-top:50px">
-
-
-                            <thead class="multipleCategoryTbl-header">
-                                <tr>
-                                    <td>
-
-                                        <div class="form-group">
-
-                                            <label asp-for="Pas" class="control-label"> <i class="fas fa-paw"></i> Pas</label>
-
-                                            @Html.DropDownList("PasId", new SelectList(ViewBag.Psi, "Id", "Ime", Model.PasId),
-                                                  new { @id = "pas", @class = "form-control" })
-                                            <span asp-validation-for="PasId" class="text-danger" />
-
-                                        </div>
-                                    </td>
-                                    <td style="width:300px">
-                                        <div class="form-group">
-                                            <label asp-for="Zadatak" class="control-label"><i class="fa fa-rocket"></i> Naziv zadatka</label>
-
-                                            <input type="text" id="zadatak" value="@ViewBag.Zadatak" readonly="readonly" class="form-control" />
-                                        </div>
-                                    </td>
+        <table id="multipleCategoryTbl" class="table" style="margin-top:50px; width:1000px">
 
 
-                                    <td>
-                                        <div class="form-group">
-                                            <label asp-for="Ocena" class="control-label"><i class="far fa-star"></i> Ocena</label>
-                                            <input type="number" min="5" max="10" asp-for="Ocena" id="txtOcena" class="form-control" />
-                                            <span asp-validation-for="Ocena" class="text-danger"></span>
-                                        </div>
+            <thead class="multipleCategoryTbl-header">
+                <tr>
+                    <td>
 
-                                    </td>
+                        <div class="form-group">
 
+                            <label asp-for="Pas" class="control-label"> <i class="fas fa-paw"></i> Pas</label>
 
-                                    <td>
-                                        <div class="form-group">
+                            @Html.DropDownList("PasId", new SelectList(ViewBag.Psi, "Id", "Ime", Model.PasId),
+                                  new { @id = "pas", @class = "form-control" })
+                            <span asp-validation-for="PasId" class="text-danger" />
 
-                                            <label asp-for="DatumUnosaOcene" class="control-label"><i class="fa fa-calendar-check"></i>  Datum unosa ocene</label>
-                                            <input type="date" id="txtDatumUnosaOcene" asp-for="DatumUnosaOcene" class="form-control" style="width:200px" readonly="readonly" />
-                                            <span asp-validation-for="DatumUnosaOcene" class="text-danger"></span>
-                                        </div>
-                                    </td>
+                        </div>
+                    </td>
+                    <td style="width:300px">
+                        <div class="form-group">
+                            <label asp-for="Zadatak" class="control-label"><i class="fa fa-rocket"></i> Naziv zadatka</label>
 
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="button" id="btnAdd" value="Dodaj" class="btn btnPsi btn-primary" style="margin-top:25px" />
-                                        </div>
-
-                                    </td>
-                            </thead>
-
-                            <tbody class="multipleCategoryTbl-body">
-                            </tbody>
+                            <input type="text" id="zadatak" value="@ViewBag.Zadatak" readonly="readonly" class="form-control" />
+                        </div>
+                    </td>
 
 
-                        </table>
-                    </div>
+                    <td>
+                        <div class="form-group">
+                            <label asp-for="Ocena" class="control-label"><i class="far fa-star"></i> Ocena</label>
+                            <input type="number" min="5" max="10" asp-for="Ocena" id="txtOcena" class="form-control" />
+                            <span asp-validation-for="Ocena" class="text-danger"></span>
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        <div class="form-group">
+
+                            <label asp-for="DatumUnosaOcene" class="control-label"><i class="fa fa-calendar-check"></i>  Datum unosa ocene</label>
+                            <input type="date" id="txtDatumUnosaOcene" asp-for="DatumUnosaOcene" class="form-control" style="width:200px" readonly="readonly" />
+                            <span asp-validation-for="DatumUnosaOcene" class="text-danger"></span>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="form-group">
+                            <input type="button" id="btnAdd" value="Dodaj" class="btn btnPsi btn-primary" style="margin-top:25px" />
+                        </div>
+
+                    </td>
+            </thead>
+
+            <tbody class="multipleCategoryTbl-body">
+            </tbody>
+
+
+        </table>
+    </div>
 
 
 
-                    <div class="form-group" style="margin-left:60px">
-                        <a asp-action="Index" asp-controller="Home" class="btn btnPsi btn-primary">Otkaži</a>
-                        <input type="button" id="btnSave" value="Sačuvaj angažovanja" class="btn btnPsi btn-primary ml-3" />
-                    </div>
+    <div class="form-group" style="margin-left:60px">
+        <a asp-action="Index" asp-controller="Home" class="btn btnPsi btn-primary">Otkaži</a>
+        <input type="button" id="btnSave" value="Sačuvaj angažovanja" class="btn btnPsi btn-primary ml-3" />
+    </div>
 
-                    <script type="text/javascript">
+    <script type="text/javascript">
             $("body").on("click", "#btnAdd", function () {
             var validate = true;
             var txtPas = $("#pas option:selected");
@@ -301,9 +339,9 @@
                 }
         });
 
-                    </script>
-    </body>
-    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    </script>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
 <script src="~/sweetalert2/dist/sweetalert2.all.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>

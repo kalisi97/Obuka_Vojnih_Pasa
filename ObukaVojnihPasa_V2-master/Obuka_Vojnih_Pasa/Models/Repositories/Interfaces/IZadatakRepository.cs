@@ -17,6 +17,6 @@ namespace Obuka_Vojnih_Pasa.Models.Repositories.Interfaces
        public List<int> VratiBrojAngazovanjaPoZadatku();
       public  List<int> VratiBrojPozitivihOcenaPoZadatku();
       public  List<string> VratiListuNazivaZadataka();
-      
+      public  void Insert(Zadatak t);
     }
 }
