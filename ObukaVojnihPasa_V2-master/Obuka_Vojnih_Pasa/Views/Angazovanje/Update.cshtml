@@ -242,6 +242,7 @@
                     btnRemove.attr("onclick", "Remove(this);");
                     btnRemove.val("Obriši");
                     cell.append(btnRemove);
+                    $("#pas option:selected").remove();
                     txtOcena.val("");
 
                 }
@@ -250,7 +251,7 @@
         function Remove(button) {
             var row = $(button).closest("TR");
             var name = $("TD", row).eq(0).html();
-
+            var id = $("TD", row).eq(1).html();
             Swal.fire({
                 title: "Da li ste sigurni da želite da obrišete podatke o psu " + name + "?",
                 icon: 'warning',
@@ -263,6 +264,8 @@
                 if (result.value) {
                     var table = $("#multipleCategoryTbl")[0];
                     table.deleteRow(row[0].rowIndex);
+                    var text = $("<option></option>").text(name).val(id);
+                    $("#pas").append(text);
                     Swal.fire(
                         'Obrisano!'
                     )

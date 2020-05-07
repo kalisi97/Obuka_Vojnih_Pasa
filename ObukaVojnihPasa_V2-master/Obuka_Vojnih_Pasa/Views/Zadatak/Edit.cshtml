@@ -14,7 +14,7 @@
                 <h5>Izmena podataka o zadatku</h5>
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input  asp-for="Angazovanja" type="hidden" />
+                    <input asp-for="Angazovanja" type="hidden" />
                     <div class="form-group">
                         <label class="cols-sm-2 control-label">Naziv zadatka</label>
                         <div class="cols-sm-10">
@@ -66,9 +66,30 @@
 
 
                             </div>
-                            
+
                         </div>
                     </div>
+
+
+                    <div class="form-group">
+                        <label class="cols-sm-2 control-label">Angažovani psi</label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-external-link-alt"></i></span>
+                                <div class="form-control" style="height:37px">
+                                  Pogledaj angažovane pse  <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-sm btn-primary" style="padding: 1px 20px" target="_blank" title="Lista angažovanih pasa na zadatku"><i class="fa fa-paw"></i></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
 
 
                     <div class="form-group" style="padding-top:10px">
@@ -82,3 +103,5 @@
         </div>
     </div>
 </div>
+
+<link href="~/content/site.css" rel="stylesheet" />

@@ -8,5 +8,6 @@ namespace Obuka_Vojnih_Pasa.Models.Extensions
     public class ZadatakFilter
     {
         public string Zadatak { get; set; }
+        public int Status { get; set; }
     }
 }

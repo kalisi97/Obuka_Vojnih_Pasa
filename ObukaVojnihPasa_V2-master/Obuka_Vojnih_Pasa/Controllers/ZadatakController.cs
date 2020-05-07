@@ -127,15 +127,37 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
             List<Zadatak> sviZadaci = service.GetAll().ToList();
             List<Zadatak> zadaci = new List<Zadatak>();
-
-            if (!string.IsNullOrEmpty(filters.Zadatak))
+            string status = string.Empty;
+            switch(filters.Status)
             {
-                zadaci = sviZadaci.Where(s => s.NazivZadatka.ToLower().Contains(filters.Zadatak.ToLower())
-                || s.Teren.ToLower().Contains(filters.Zadatak.ToLower())).ToList();
-
-                if (zadaci.Count() == 0) return zadaci;
+                case 1: status = "Kreiran"; break;
+                case 2: status = "Završen"; break;
+                case 3: status = "Ocenjen"; break;
+                default: break;
             }
 
+            if(!string.IsNullOrEmpty(filters.Zadatak) && !string.IsNullOrEmpty(status))
+            {
+                zadaci = sviZadaci.Where((s => s.NazivZadatka.ToLower().Contains(filters.Zadatak.ToLower())
+                               || s.Teren.ToLower().Contains(filters.Zadatak.ToLower()))).ToList();
+                if (zadaci.Count() != 0)
+                    zadaci = zadaci.Where(s => s.Status == status).ToList();
+                else  return zadaci;
+            }
+            if (!string.IsNullOrEmpty(filters.Zadatak) && string.IsNullOrEmpty(status))
+            {
+                zadaci = sviZadaci.Where((s => s.NazivZadatka.ToLower().Contains(filters.Zadatak.ToLower())
+                || s.Teren.ToLower().Contains(filters.Zadatak.ToLower()))).ToList();
+             
+                if (zadaci.Count() == 0) return zadaci;
+            }
+            if(!string.IsNullOrEmpty(status) && string.IsNullOrEmpty(filters.Zadatak))
+            {
+                if(zadaci.Count() != 0)
+                zadaci = zadaci.Where(s => s.Status == status).ToList();
+                else zadaci = sviZadaci.Where(s => s.Status == status).ToList();
+                if (zadaci.Count() == 0) return zadaci;
+            }
 
             if (zadaci.Count() == 0) zadaci = sviZadaci;
             return zadaci;

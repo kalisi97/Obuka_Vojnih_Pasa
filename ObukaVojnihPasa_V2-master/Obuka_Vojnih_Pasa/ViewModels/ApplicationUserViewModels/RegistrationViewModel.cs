@@ -15,8 +15,9 @@ namespace Obuka_Vojnih_Pasa.ViewModels
         [Required(ErrorMessage = "Ovo polje je obavezno!")]
         [EmailAddress]
         [ValidEmailDomain(allowedDomain: "vs.com",
-         ErrorMessage = "Email se mora završavati sa domenom: vs.com")]
-        [Remote(action: "IsEmailInUse", controller: "Account")]
+         ErrorMessage = "Email se mora završavati domenom: vs.com")]
+        [Remote(action: "IsEmailValid", controller: "Account")]
+       
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Ovo polje je obavezno!")]

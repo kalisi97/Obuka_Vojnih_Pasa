@@ -141,9 +141,12 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
                 }
             }
+            if (!User.IsInRole("Admin"))
+                if (angazovaniPsi.Count()==0) return RedirectToAction("PageNotFound", "Home", new { message = "Nijedan pas sa vaše obuke nije angažovan na ovom zadatku!" });
 
-
-           if(ocenjenaAngazovanja!=null)  ViewBag.Ocenjena = ocenjenaAngazovanja;
+            if (ocenjenaAngazovanja!=null)  ViewBag.Ocenjena = ocenjenaAngazovanja;
+          
+            
             ViewBag.Psi = angazovaniPsi;
             ViewBag.BrojAngazovanja = angazovaniPsi.Count();
      

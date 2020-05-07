@@ -114,11 +114,22 @@ namespace Obuka_Vojnih_Pasa.Controllers
                         logger.Log(LogLevel.Warning, confirmationLink);
                     return RedirectToAction("GetAllUsers", new { message = $"Link za verifikaciju naloga korisnika {user.UserName} je poslat na email adresu {user.Email}" });
                     */
+                    try
+                    {
+                        var resultRole = await userManager.AddToRoleAsync(user, "Instruktor");
 
+                        if (!resultRole.Succeeded)
+                        {
+                            ModelState.AddModelError("", "Neuspešno dodavanje uloga korisniku");
+                            return View(model);
+                        }
+     
+                     return  RedirectToAction("GetAllUsers", new { message = $"Registracija uspešno izvršena." });
 
-                    RedirectToAction("GetAllUsers", new { message = $"Registracija uspešno izvršena." });
-
-
+                    }catch(Exception ex)
+                    {
+                        throw new Exception(ex.Message);
+                    }
 
                 }
                 foreach (var error in result.Errors)
@@ -126,7 +137,8 @@ namespace Obuka_Vojnih_Pasa.Controllers
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+            CinoviDropDownList();
+            ObukeDropDownList();
             return View(model);
         }
         private void ObukeDropDownList(object izabranaObuka = null)
@@ -344,7 +356,7 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
         [HttpGet]
 
-        public async Task<IActionResult> EditUserAsync(string id)
+        public async Task<IActionResult> EditUser(string id)
         {
             var user = await userManager.FindByIdAsync(id);
 

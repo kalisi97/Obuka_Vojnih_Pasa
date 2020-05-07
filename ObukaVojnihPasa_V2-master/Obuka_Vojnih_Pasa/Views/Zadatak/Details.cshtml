@@ -4,6 +4,7 @@
 @inject IAuthorizationService authorizationService
 @inject UserManager<ApplicationUser> userManager
 
+<link href="~/lib/sortable/Contents/bootstrap-sortable.css" rel="stylesheet" />
 
 @{Instruktor instruktor = null; }
 @{
@@ -33,7 +34,7 @@ else
     </h3>
 
     <div>
-        <table class="table" style="color:white" id="details">
+        <table class="table sortable" style="color:white" id="details">
             <thead>
                 <tr>
                     <th>
@@ -66,42 +67,43 @@ else
 
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            <i class="fas fa-paw"></i>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Pas.Ime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Zadatak.Datum)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Ocena)
-                        </td>
-                        @{
-                            var parms = new Dictionary<string, string>
-                                                                                                {
+                <tr>
+                    <td>
+                        <i class="fas fa-paw"></i>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pas.Ime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.NazivZadatka)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Zadatak.Datum)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumUnosaOcene)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ocena)
+                    </td>
+                    @{
+                        var parms = new Dictionary<string, string>
+                                                                                                                                {
                 { "PasId",item.PasId.ToString() },
                 { "ZadatakId",item.ZadatakId.ToString() }
                         };
-                        }
-
+                    }
+                    @if (item.Zadatak.Status.Equals("Ocenjen"))
+                    {
                         @if ((instruktor != null && item.Pas.ObukaId == instruktor.ObukaId) || User.IsInRole("Admin"))
                         {
-                    <td>
-                        <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms" title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
-                        @if ((await authorizationService.AuthorizeAsync(User, "AngazovanjePolicy")).Succeeded)
-                        {
-                            <a asp-action="Delete" asp-controller="Angazovanje" asp-all-route-data="parms" title="Obriši podatke o angažovanju"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
-                        }
-                    </td>
+                            <td>
+                                <a asp-action="Edit" asp-controller="Angazovanje" asp-all-route-data="parms" title="Izmeni podatke o angažovanju"><i class=" fas fa-pencil-alt" style="color:snow;margin-left:20px"></i></a>
+                                @if ((await authorizationService.AuthorizeAsync(User, "AngazovanjePolicy")).Succeeded)
+                                {
+                                    <a asp-action="Delete" asp-controller="Angazovanje" asp-all-route-data="parms" title="Obriši podatke o angažovanju"><i class=" fas fa-trash-alt" style="color:snow;margin-left:20px"></i></a>
+                                }
+                            </td>
 
                         }
                         else
@@ -111,12 +113,23 @@ else
                             </td>
                         }
 
+                    }
+                    else
+                    {
+                        <td><i class="fa fa-history"> Ocenjivanje u toku...</i></td>
 
+                    }
 
-                    </tr>
+                </tr>
                 }
 
             </tbody>
         </table>
     </div>
+    <div class="form-group">
+        <a asp-action="Index" asp-controller="Zadatak" class="btn btnPsi btn-primary"> Povratak na listu zadataka</a>
+    </div>
 }
+<link href="~/content/site.css" rel="stylesheet" />
+<script src="~/lib/sortable/Scripts/bootstrap-sortable.js"></script>
+<script src="~/lib/sortable/Scripts/moment.min.js"></script>

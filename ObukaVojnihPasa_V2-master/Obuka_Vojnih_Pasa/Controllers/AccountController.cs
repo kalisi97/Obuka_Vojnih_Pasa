@@ -12,7 +12,7 @@ using Obuka_Vojnih_Pasa.Models.Domain;
 using Obuka_Vojnih_Pasa.Services;
 using Obuka_Vojnih_Pasa.ViewModels;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Net.Sockets;
 
 namespace Obuka_Vojnih_Pasa.Controllers
 {
@@ -66,16 +66,30 @@ namespace Obuka_Vojnih_Pasa.Controllers
 
         [AcceptVerbs("Get", "Post")]
         [AllowAnonymous]
-        public async Task<IActionResult> IsEmailInUse(string email)
+        public async Task<IActionResult> IsEmailValid(string email)
         {
+            
+            bool validan = true;
             var user = await userManager.FindByEmailAsync(email);
-            if (user == null)
+            if (!email.Contains("@") || email.Length < 8) validan = false;
+            if(validan == true)
+            {
+                string domen = email.Substring(email.IndexOf("@"));
+                if (domen != "@vs.com") validan = false;
+            }
+
+
+            if (user == null && validan == true)
             {
                 return Json(true);
             }
             else
             {
+                if(validan == true && user != null)
                 return Json($" {email} dodeljen nekom korisniku.");
+                else
+                return Json("Email se mora završavati domenom: vs.com");
+                
             }
         }
 
